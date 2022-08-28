@@ -10,7 +10,7 @@ void relative_path(char* root_dir_path, char* current_path, char* display_path){
     size_t first_deviation = 0, min_len = strlen(root_dir_path) < strlen(current_path) ? strlen(root_dir_path) : strlen(current_path);
     while(root_dir_path[first_deviation] == current_path[first_deviation]) first_deviation++;
 
-    if (first_deviation + 1 == strlen(root_dir_path)){
+    if (first_deviation == strlen(root_dir_path)){
         display_path[0] = '~';
         int i = 1;
         for (int j = strlen(root_dir_path); j<strlen(current_path); i++, j++){

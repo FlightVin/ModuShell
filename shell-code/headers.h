@@ -5,8 +5,10 @@
 #include <errno.h>
 #include <unistd.h>
 
+#include "cmd.h"
 #include "paths.h"
 #include "prompt.h"
 #include "error_mes.h"
 #include "echo.h"
 #include "cd.h"
+#include "pwd.h"

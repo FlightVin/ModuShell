@@ -4,16 +4,6 @@ const size_t command_len = 1e3;
 const size_t max_arg_length = 1e3;
 size_t input_len = 1e3;
 
-void my_strtok(char**, int*, char*, char*);
-
-void my_strtok(char** list, int* num, char* args, char* in_data){
-    list[0] = strtok(in_data, args);
-    *num = 0;
-
-    while(list[*num]){
-        list[++(*num)] = strtok(NULL, args);
-    }
-}
 
 int main(){
     char* root_dir_path = getenv("PWD");
@@ -44,8 +34,13 @@ int main(){
             if (strcmp(main_command, "echo") == 0){
                 echo(&argument_list[1], num_arguments - 1);
             } else if (strcmp(main_command, "cd") == 0){
-                cd(&argument_list[1], num_arguments - 1);
+                cd(&argument_list[1], num_arguments - 1, root_dir_path);
+            } else if (strcmp(main_command, "pwd") == 0){
+                pwd(&argument_list[1], num_arguments - 1, root_dir_path); //NOTE - HOME is pseudo home, home is actual home
+            } else {
+                printf("Invalid command: %s\n", main_command);
             }
+        
         }
 
         fflush(stdout);

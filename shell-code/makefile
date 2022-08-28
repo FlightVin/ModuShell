@@ -1,5 +1,7 @@
-main: main.o prompt.o error_mes.o path.o echo.o cd.o
-	gcc -o main main.o prompt.o error_mes.o path.o echo.o cd.o
+objects = main.o cmd.o prompt.o error_mes.o path.o echo.o cd.o pwd.o
+
+main: $(objects)
+	gcc -o main $(objects)
 
 main.o: headers.h main.c
 
@@ -13,5 +15,9 @@ echo.o : echo.c echo.h headers.h
 
 cd.o : cd.c cd.h cd.h
 
+cmd.o : cmd.c cmd.h headers.h
+
+pwd.o : pwd.c pwd.h headers.h
+
 clean:
-	rm main main.o error_mes.o prompt.o path.o echo.o cd.o
+	rm main $(objects)

@@ -20,6 +20,8 @@ void prompt(char* root_dir_path){
 
     relative_path(root_dir_path, cur_dir, display_path);
 
+    printf(" \033[0;34m");
     printf("<%s@%s:%s>", user_name, system_name, display_path);
+    printf(" \033[0m");
 }
 
