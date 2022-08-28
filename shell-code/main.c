@@ -4,6 +4,17 @@ const size_t command_len = 1e3;
 const size_t max_arg_length = 1e3;
 size_t input_len = 1e3;
 
+void my_strtok(char**, int*, char*, char*);
+
+void my_strtok(char** list, int* num, char* args, char* in_data){
+    list[0] = strtok(in_data, args);
+    *num = 0;
+
+    while(list[*num]){
+        list[++(*num)] = strtok(NULL, args);
+    }
+}
+
 int main(){
     char* root_dir_path = getenv("PWD");
 
@@ -19,30 +30,21 @@ int main(){
 
         getline(&input_message, &input_len, stdin);
 
-        command_list[0] = strtok(input_message, ";\n");
-        int num_commands = 0;
-
-        while(command_list[num_commands]){
-            command_list[++num_commands] = strtok(NULL, ";\n");
-        }
+        int num_commands;
+        my_strtok(command_list, &num_commands, ";\n", input_message);
 
         for (int cmd_index = 0; cmd_index < num_commands; cmd_index++){
             strcpy(cur_command, command_list[cmd_index]);
 
-            // puts(cur_command);
-
-            argument_list[0] = strtok(cur_command, " \n\t");
-            int num_arguments = 0;
-
-            while(argument_list[num_arguments]){
-                argument_list[++num_arguments] = strtok(NULL, " \n\t");
-            }
-
+            int num_arguments;
+            my_strtok(argument_list, &num_arguments, " \n\t", cur_command);
 
             char* main_command = strdup(argument_list[0]);
 
             if (strcmp(main_command, "echo") == 0){
                 echo(&argument_list[1], num_arguments - 1);
+            } else if (strcmp(main_command, "cd") == 0){
+                cd(&argument_list[1], num_arguments - 1);
             }
         }
 

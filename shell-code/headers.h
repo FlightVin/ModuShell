@@ -9,3 +9,4 @@
 #include "prompt.h"
 #include "error_mes.h"
 #include "echo.h"
+#include "cd.h"
