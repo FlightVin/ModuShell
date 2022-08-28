@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <unistd.h>
 
+#include "paths.h"
 #include "prompt.h"
 #include "error_mes.h"
 #include "echo.h"

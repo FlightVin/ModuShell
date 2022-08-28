@@ -1,4 +1,7 @@
 #include "headers.h"
+#include "path.h"
+
+const size_t max_str_len = 1e3;
 
 void prompt(char* root_dir_path){
 
@@ -11,7 +14,7 @@ void prompt(char* root_dir_path){
 
     char* user_name = getenv("USER");
     char* system_name = strdup(uname_struct.sysname);
-    char cur_dir[1024], display_path[1024];
+    char cur_dir[max_str_len], display_path[max_str_len];
 
     getcwd(cur_dir, 1024);
 
@@ -20,12 +23,3 @@ void prompt(char* root_dir_path){
     printf("<%s@%s:%s>", user_name, system_name, display_path);
 }
 
-void relative_path(char* root_dir_path, char* current_path, char* display_path){
-
-    if (strcmp(current_path, root_dir_path) == 0){
-        strcpy(display_path, "~");
-    }
-
-    strcat(display_path, "/");
-
-}

@@ -2,6 +2,7 @@
 
 const size_t command_len = 1e3;
 const size_t max_arg_length = 1e3;
+size_t input_len = 1e3;
 
 int main(){
     char* root_dir_path = getenv("PWD");
@@ -16,7 +17,6 @@ int main(){
     while(1){
         prompt(root_dir_path);
 
-        size_t input_len = 1e3;
         getline(&input_message, &input_len, stdin);
 
         command_list[0] = strtok(input_message, ";\n");
@@ -42,7 +42,7 @@ int main(){
             char* main_command = strdup(argument_list[0]);
 
             if (strcmp(main_command, "echo") == 0){
-                
+                echo(&argument_list[1], num_arguments - 1);
             }
         }
 
