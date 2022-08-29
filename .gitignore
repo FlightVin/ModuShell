@@ -1,4 +1,3 @@
-/testing.c
-/shell-code/*.o
-/shell-code/main
+/*.o
+/main
 /.vscode
