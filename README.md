@@ -13,8 +13,9 @@ Making a shell in C programming language
     * `$ command1 arguments & command2 arguments`
     * `$ command1 arguments; command2     arguments   ; command3  arguments ...`
     * And so on
+4. To remove all .o and main file run `$ make clean`
 
-NOTE - currently, doesn't handle &
+NOTE - currently, handles & as ;
 
 ---
 
@@ -59,3 +60,9 @@ NOTE - currently, doesn't handle &
         `$ pwd` prints /HOME/username/... if the present working directory is a descendant of the directory from which the shell was executed
 
         `$ pwd` prints /home/username/... otherwise
+
+4. **`exit`**
+    * _Output_ : Quits shell
+    * _Syntax_ :
+
+        `$ exit`
