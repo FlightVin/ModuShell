@@ -28,7 +28,7 @@ void cd(char** path, int num){
 
         chdir(old_pwd);
 
-    } else if (*path[0] == '~' || (*path[0] == '/' && strlen(*path)>2)){ // to handle both mount / and relative path
+    } else if (*path[0] == '~'){
 
         if (*path[0] == '~' && strlen(*path) > 2){
 
@@ -36,19 +36,6 @@ void cd(char** path, int num){
             strcpy(new_path, root_dir_path);
             strcat(new_path, "/");
             strcat(new_path, &(*path)[2]);
-
-            int chdir_ret = chdir(new_path);
-
-            if (chdir_ret < 0){
-                printf("No such path exists!\n");
-                return;
-            }
-        } else if (*path[0] == '/') {
-
-            char new_path[1000];
-            strcpy(new_path, cur_dir);
-            strcat(new_path, "/");
-            strcat(new_path, &(*path)[1]);
 
             int chdir_ret = chdir(new_path);
 
