@@ -1,19 +1,26 @@
 #include "headers.h"
 #include "path.h"
 
-void pwd(char** path, int num, char* root_dir_path){
+void pwd(char** path, int num){
+
+    if (num > 0){
+        printf("Enter no arguments for pwd!\n");
+        return;
+    }
+
     char cur_dir[1000];
     getcwd(cur_dir, 1000);
+    /*
+    // Uncomment to print relative path 
     char display_path[1000];
 
-    relative_path(root_dir_path, cur_dir, display_path);
+    relative_path(cur_dir, display_path);
 
     if (display_path[0] == '~'){
         char* temp_path = NULL;
         if (strlen(display_path)>2) temp_path = strdup(&display_path[2]);
 
-        char* user_name = getenv("USER");
-        strcpy(display_path, "HOME/");
+        strcpy(display_path, "home/");
         strcat(display_path, user_name);
 
         if (temp_path){
@@ -23,4 +30,6 @@ void pwd(char** path, int num, char* root_dir_path){
     }
 
     printf("%s\n", display_path);
+    */
+    printf("%s\n", cur_dir);
 }

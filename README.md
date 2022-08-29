@@ -14,6 +14,8 @@ Making a shell in C programming language
     * `$ command1 arguments; command2     arguments   ; command3  arguments ...`
     * And so on
 
+NOTE - currently, doesn't handle &
+
 ---
 
 ## Commands
@@ -26,7 +28,7 @@ Making a shell in C programming language
 
     * _Example_ : 
 
-        `$ echo hello    there!`
+        `$ echo hello there!`
 
         `>>> hello there!`
     
