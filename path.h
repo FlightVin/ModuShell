@@ -3,4 +3,6 @@
 
 void relative_path(char*, char*);
 
+void absolute_path(char*, char*);
+
 #endif

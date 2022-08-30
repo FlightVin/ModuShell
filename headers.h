@@ -14,6 +14,7 @@
 #include "cd.h"
 #include "pwd.h"
 #include "back_process.h"
+#include "ls.h"
 
 // using extern for convention
 extern size_t max_str_len;

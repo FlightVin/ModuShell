@@ -22,3 +22,32 @@ void relative_path(char* current_path, char* display_path){
 
     strcpy(display_path, current_path);
 }
+
+void absolute_path(char* given_path, char* ret_path){
+    if (strlen(given_path) == 0){
+        strcpy(ret_path, root_dir_path);
+    }else{
+        if (given_path[0] == '~'){
+            if (strlen(given_path) > 2){
+
+                strcpy(ret_path, root_dir_path);
+                strcat(ret_path, "/");
+                strcat(ret_path, given_path);
+
+            }else{
+                strcpy(ret_path, root_dir_path);
+            }
+        } else if (given_path[0] == '/'){
+            strcpy(ret_path, given_path);
+
+        } else if (given_path[0] == '.' || strlen(given_path) > 1 && given_path[0] == '.' && given_path[1] == '.') {
+            strcpy(ret_path, given_path);
+
+        } else {
+            getcwd(cur_dir, max_str_len);
+            strcpy(ret_path, cur_dir);
+            strcat(ret_path, "/");
+            strcat(ret_path, given_path);
+        }
+    }
+}

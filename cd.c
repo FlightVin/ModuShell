@@ -1,4 +1,5 @@
 #include "headers.h"
+#include "path.h"
 
 void cd(char** path, int num){
 
@@ -27,7 +28,20 @@ void cd(char** path, int num){
         printf("%s\n", old_pwd);
 
         chdir(old_pwd);
+    } else {
 
+        char new_path[1000];
+        absolute_path(*path, new_path);
+
+        int chdir_ret = chdir(new_path);
+
+        if (chdir_ret < 0){
+            printf("No such path exists!\n");
+            return;
+        }
+
+    }
+    /*
     } else if (*path[0] == '~'){
 
         if (*path[0] == '~' && strlen(*path) > 2){
@@ -59,6 +73,7 @@ void cd(char** path, int num){
             return;
         }
     }
+    */
 
     strcpy(old_pwd, cur_dir);
 

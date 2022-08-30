@@ -10,8 +10,6 @@ int main(){
 
     getcwd(root_dir_path, max_str_len);
 
-    ssize_t tot_jobs = 0, jobs_done = 0;
-
     while(1){
         prompt(root_dir_path);
 
