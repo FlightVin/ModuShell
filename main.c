@@ -16,11 +16,6 @@ int main(){
         size_t input_len = 1e3;
         getline(&input_message, &input_len, stdin);
 
-        if (strlen(input_message) == 0){
-            printf("enter\n");
-            continue;
-        }
-
         size_t no_space = strlen(input_message) - 1;
         for (no_space = strlen(input_message) - 1; no_space>0; no_space--){
             if (input_message[no_space - 1] != ' ' && input_message[no_space -1] != '\t') break;

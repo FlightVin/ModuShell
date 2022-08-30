@@ -22,7 +22,7 @@ NOTE - currently, handles & as ;
 ## Commands
 
 1. **`echo`**
-    * _Output_ : Prints the entered arguments by including extra spaces and tabspaces after initial character after echo, i.e., takes the string as if it were in quotes. 
+    * _Output_ : Prints the entered arguments by excluding extra spaces and tabspaces.
     * _Syntax_ : 
     
         `$ echo <arguments>`

@@ -33,7 +33,7 @@ void run_command(char* cur_command){
     char* main_command = strdup(argument_list[0]);
 
     if (strcmp(main_command, "echo") == 0){
-        echo(old_argument);
+        echo(&argument_list[1], num_arguments - 1);
     } else if (strcmp(main_command, "cd") == 0){
         cd(&argument_list[1], num_arguments - 1);
     } else if (strcmp(main_command, "pwd") == 0){
