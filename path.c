@@ -32,7 +32,7 @@ void absolute_path(char* given_path, char* ret_path){
 
                 strcpy(ret_path, root_dir_path);
                 strcat(ret_path, "/");
-                strcat(ret_path, given_path);
+                strcat(ret_path, &given_path[2]);
 
             }else{
                 strcpy(ret_path, root_dir_path);

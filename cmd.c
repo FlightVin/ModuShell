@@ -37,7 +37,15 @@ void run_command(char* cur_command){
         pwd(&argument_list[1], num_arguments - 1); //NOTE - HOME is pseudo home, home is actual home
     } else if (strcmp(main_command, "quit") == 0 || strcmp(main_command, "exit") == 0){
         my_quit();
-    } else {
+    } else if (strcmp(main_command, "ls") == 0){
+        ls(&argument_list[1], num_arguments - 1);
+    }
+    
+    else {
         printf("Invalid command: %s\n", main_command);
     }
+}
+
+void my_cwd(){
+    getcwd(cur_dir, max_str_len);
 }

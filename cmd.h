@@ -9,4 +9,6 @@ void my_quit();
 
 void run_command(char*);
 
+void my_cwd();
+
 #endif
