@@ -31,7 +31,7 @@ void ls(char** passed_args, int num_args){
             DIR* dir_ret_value = opendir(correct_path);
 
             if (dir_ret_value){
-                dir_names[dir_num++] = passed_args[i];
+                dir_names[dir_num++] = strdup(correct_path);
             } else {
                 char error_string[max_str_len];
                 sprintf(error_string, "ls: cannot access '%s'.", correct_path);
@@ -58,8 +58,78 @@ void ls(char** passed_args, int num_args){
     }
 }
 
-// Test this - ls /mnt ~/dir1 ./dir1 ../C-shell/dir2 dir2 kjlsd
+int comparator(const void* a, const void* b){
+    char* l = ((struct dirent*)a)->d_name;
+    char* r = ((struct dirent*)b)->d_name;
+
+    return strcasecmp(a, b);
+}
+
+// Test this - ls -al /mnt ~/dir1 ./dir1 ../C-shell/dir2 dir2 kjlsd
 
 void do_ls(char* cur_dir, int l_flag, int a_flag){
-    printf("%s:\n", cur_dir);
+    char relative_name[max_str_len];
+    relative_path(cur_dir, relative_name);
+    printf("%s:\n", relative_name);
+
+    DIR* dir_stream = opendir(cur_dir);
+    if (!dir_stream){
+        char error_string[max_str_len];
+        sprintf(error_string, "Could not open DIR* of '%s'.", cur_dir);
+        perror(error_string);
+        return;
+    }
+
+    struct dirent* dir_list[max_arg_length];
+    size_t dir_num = 0;
+
+    struct dirent* dir_struct = readdir(dir_stream);
+    while(dir_struct != NULL){
+        if (dir_struct->d_name[0] == '.'){
+            if (a_flag == 1){
+                dir_list[dir_num++] = dir_struct;
+            }
+        }else{
+            dir_list[dir_num++] = dir_struct;
+        }
+
+        dir_struct = readdir(dir_stream);
+    }
+
+    qsort((void*)dir_list, dir_num, sizeof(dir_list[0]), comparator);
+
+    if (l_flag == 0){
+        for (int i = 0; i<dir_num; i++){
+            color_print(dir_list[i]);
+            printf(" ");
+        }
+        printf("\n");
+    } else {
+
+        for (int i = 0; i<dir_num; i++){
+
+            char cur_path[max_str_len];
+            strcpy(cur_path, cur_dir);
+            strcat(cur_path, "/");
+            strcat(cur_path, dir_list[i]->d_name);
+            puts(cur_path);
+        }
+    }
+
+    int close_ret_value = closedir(dir_stream);
+    if (close_ret_value < 0){
+        char error_string[max_str_len];
+        sprintf(error_string, "Could not close DIR* of '%s'.", cur_dir);
+        perror(error_string);
+    }
+}
+
+void color_print(struct dirent* cur_ptr){
+    if (cur_ptr->d_type == DT_DIR){
+        printf(" \033[0;34m");
+    } else if (cur_ptr->d_type == DT_REG){
+        // To do executable cheking
+    }
+    printf("%s", cur_ptr->d_name);
+    printf(" \033[0m");
 }

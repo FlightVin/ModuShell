@@ -23,7 +23,7 @@ int main(){
 
         size_t no_space = strlen(input_message) - 1;
         for (no_space = strlen(input_message) - 1; no_space>0; no_space--){
-            if (input_message[no_space - 1] != ' ') break;
+            if (input_message[no_space - 1] != ' ' && input_message[no_space -1] != '\t') break;
         }
 
         // Handling seg fault for trailing spaces
@@ -34,7 +34,7 @@ int main(){
 
         for (int cmd_index = 0; cmd_index < num_commands; cmd_index++){
             strcpy(cur_command, command_list[cmd_index]);
-
+            
             if (detect_amp(command_list[cmd_index])){
                 int flag = (cur_command[strlen(cur_command) - 1] == '&') ? 1 : 0;
                 int num_background;
@@ -53,7 +53,6 @@ int main(){
                     run_command(background_list[num_background - 1]);
                 }
             }else{
-
                 run_command(cur_command);
             }
         }

@@ -22,16 +22,16 @@ NOTE - currently, handles & as ;
 ## Commands
 
 1. **`echo`**
-    * _Output_ : Prints the entered arguments by removing extra spaces and tabspaces.
+    * _Output_ : Prints the entered arguments by including extra spaces and tabspaces after initial character after echo, i.e., takes the string as if it were in quotes. 
     * _Syntax_ : 
     
         `$ echo <arguments>`
 
     * _Example_ : 
 
-        `$ echo hello there!`
+        `$ echo hello     there!`
 
-        `>>> hello there!`
+        `>>> hello     there!`
     
 2. **`cd`**
     * _Output_ : Changes current directory to 
