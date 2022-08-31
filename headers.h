@@ -37,3 +37,6 @@ extern char cur_dir[1000];
 
 extern long process_exec_time;
 
+// For background process handling
+extern BackProcess background_process_queue[1000];
+extern size_t background_process_num;
