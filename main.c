@@ -37,12 +37,11 @@ int main(){
                 my_strtok(background_list, &num_background, "&", cur_command);
 
                 for (int i = 0; i<num_background-1; i++){
-                    // TO DO - background
-                    run_cmd_background(background_list[num_background - 1]);
+                    puts(background_list[i - 1]);
+                    run_cmd_background(background_list[i - 1]);
                 }
 
                 if (flag){
-                    // TO DO - background
                     run_cmd_background(background_list[num_background - 1]);
                 }else{
                     run_command(background_list[num_background - 1]);

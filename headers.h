@@ -25,6 +25,8 @@
 #include "fore_process.h"
 
 // using extern for convention
+
+// Generic variables
 extern size_t max_str_len;
 extern size_t command_len;
 extern size_t max_arg_length;
@@ -35,6 +37,7 @@ extern char user_name[1000];
 extern char old_pwd[1000];
 extern char cur_dir[1000];
 
+// For foregorund processes
 extern long process_exec_time;
 
 // For background process handling

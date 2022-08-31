@@ -7,7 +7,7 @@ void run_in_background(char**);
 
 struct back_process{
     pid_t process_pid;
-    char process_name[1000];    
+    char* process_name;   
 };
 
 typedef struct back_process BackProcess;
