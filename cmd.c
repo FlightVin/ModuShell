@@ -43,9 +43,9 @@ void run_command(char* cur_command){
     } else if (strcmp(main_command, "ls") == 0){
         ls(&argument_list[1], num_arguments - 1);
     }
-    
+
     else {
-        printf("Invalid command: %s\n", main_command);
+        run_in_foreground(argument_list);
     }
 }
 

@@ -21,8 +21,13 @@ void prompt(){
 
     relative_path(cur_dir, display_path);
 
+    char process_time_promt[1000];
+    if (process_exec_time >= 1) sprintf(process_time_promt, "took %lds", process_exec_time);
+    else strcpy(process_time_promt, "");
+    process_exec_time = 0.0;
+
     printf("\033[33m");
-    printf("<%s@%s:%s> ", user_name, system_name, display_path);
+    printf("<%s@%s:%s%s> ", user_name, system_name, display_path, process_time_promt);
     printf("\033[0m");
 }
 

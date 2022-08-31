@@ -10,6 +10,8 @@
 #include <sys/stat.h>
 #include <grp.h>
 #include <time.h>
+#include <sys/wait.h>
+
 
 #include "cmd.h"
 #include "paths.h"
@@ -33,4 +35,5 @@ extern char user_name[1000];
 extern char old_pwd[1000];
 extern char cur_dir[1000];
 
+extern long process_exec_time;
 
