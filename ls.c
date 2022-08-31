@@ -62,20 +62,26 @@ int comparator(const void* a, const void* b){
     char* l = ((struct dirent*)a)->d_name;
     char* r = ((struct dirent*)b)->d_name;
 
-    return strcasecmp(a, b);
+    // if (l[0] == '.') l[0] = '\0';
+    // if (r[0] == '.') r[0] = '\0';
+
+    return strcmp(a, b);
 }
 
 // Test this - ls -al /mnt ~/dir1 ./dir1 ../C-shell/dir2 dir2 kjlsd
 
-void do_ls(char* cur_dir, int l_flag, int a_flag){
+void do_ls(char* ls_dir_path, int l_flag, int a_flag){
+    // puts(ls_dir_path);
+
     char relative_name[max_str_len];
-    relative_path(cur_dir, relative_name);
+    relative_path(ls_dir_path, relative_name);
     printf("%s:\n", relative_name);
 
-    DIR* dir_stream = opendir(cur_dir);
+
+    DIR* dir_stream = opendir(ls_dir_path);
     if (!dir_stream){
         char error_string[max_str_len];
-        sprintf(error_string, "Could not open DIR* of '%s'.", cur_dir);
+        sprintf(error_string, "Could not open DIR* of '%s'.", ls_dir_path);
         perror(error_string);
         return;
     }
@@ -100,36 +106,116 @@ void do_ls(char* cur_dir, int l_flag, int a_flag){
 
     if (l_flag == 0){
         for (int i = 0; i<dir_num; i++){
-            color_print(dir_list[i]);
+
+            char cur_path[max_str_len];
+            strcpy(cur_path, ls_dir_path);
+            strcat(cur_path, "/");
+            strcat(cur_path, dir_list[i]->d_name);
+
+            color_print(dir_list[i], cur_path);
             printf(" ");
         }
         printf("\n");
     } else {
 
+        size_t total_val = 0;
+        struct stat stat_struct;
+       
         for (int i = 0; i<dir_num; i++){
 
             char cur_path[max_str_len];
-            strcpy(cur_path, cur_dir);
+            strcpy(cur_path, ls_dir_path);
             strcat(cur_path, "/");
             strcat(cur_path, dir_list[i]->d_name);
-            puts(cur_path);
+
+            if (stat(cur_path, &stat_struct) == 0){
+                total_val += stat_struct.st_blocks;
+            }            
         }
+
+        printf("total %ld\n", total_val);
+
+        for (int i = 0; i<dir_num; i++){
+
+            char cur_path[max_str_len];
+            strcpy(cur_path, ls_dir_path);
+            strcat(cur_path, "/");
+            strcat(cur_path, dir_list[i]->d_name);
+
+            if (stat(cur_path, &stat_struct) == 0){
+                
+                // Permisions
+                if (stat_struct.st_mode & S_IFDIR) printf("d");
+                else printf("-");
+                
+                if (stat_struct.st_mode & S_IRUSR) printf("r");
+                else printf("-");
+
+                if (stat_struct.st_mode & S_IWUSR) printf("w");
+                else printf("-");
+
+                if (stat_struct.st_mode & S_IXUSR) printf("x");
+                else printf("-");
+
+                if (stat_struct.st_mode & S_IRGRP) printf("r");
+                else printf("-");
+
+                if (stat_struct.st_mode & S_IWGRP) printf("w");
+                else printf("-");
+
+                if (stat_struct.st_mode & S_IXGRP) printf("x");
+                else printf("-");
+
+                if (stat_struct.st_mode & S_IROTH) printf("r");
+                else printf("-");
+
+                if (stat_struct.st_mode & S_IWOTH) printf("w");
+                else printf("-");
+
+                if (stat_struct.st_mode & S_IXOTH) printf("x");
+                else printf("-");
+
+                // Hardlinks
+                printf(" %ld", stat_struct.st_nlink);
+
+                // Owndership
+                printf(" %s %s", getpwuid(stat_struct.st_uid)->pw_name, getgrgid(stat_struct.st_gid)->gr_name);
+
+                // Size
+                printf(" %7ld", stat_struct.st_size); // Allocating 7 as that's the maximum on my machine
+
+                // last modification time
+                struct tm* ret_time = localtime(&stat_struct.st_mtime);
+                printf(" %s %d %d:%d ", get_month(ret_time->tm_mon), ret_time->tm_mday, ret_time->tm_hour, ret_time->tm_min);
+
+                color_print(dir_list[i], cur_path);
+                
+
+                printf("\n");
+            } else {
+                perror("Could not stat");
+            }     
+        }
+
     }
 
     int close_ret_value = closedir(dir_stream);
     if (close_ret_value < 0){
         char error_string[max_str_len];
-        sprintf(error_string, "Could not close DIR* of '%s'.", cur_dir);
+        sprintf(error_string, "Could not close DIR* of '%s'.", ls_dir_path);
         perror(error_string);
     }
+    
 }
 
-void color_print(struct dirent* cur_ptr){
+void color_print(struct dirent* cur_ptr, char* path){
     if (cur_ptr->d_type == DT_DIR){
-        printf(" \033[0;34m");
+        printf("\033[34m");
     } else if (cur_ptr->d_type == DT_REG){
-        // To do executable cheking
+        struct stat stat_struct;
+        stat(path, &stat_struct);
+        if (stat_struct.st_mode & S_IXUSR) printf("\033[32m"); // Executable files
     }
     printf("%s", cur_ptr->d_name);
-    printf(" \033[0m");
+    printf("\033[0m");
 }

@@ -52,3 +52,18 @@ void run_command(char* cur_command){
 void my_cwd(){
     getcwd(cur_dir, max_str_len);
 }
+
+char* get_month(int m_num){
+    if (m_num == 1) return "Jan";
+    if (m_num == 2) return "Feb";
+    if (m_num == 3) return "Mar";
+    if (m_num == 4) return "Apr";
+    if (m_num == 5) return "May";
+    if (m_num == 6) return "Jun";
+    if (m_num == 7) return "Jul";
+    if (m_num == 8) return "Aug";
+    if (m_num == 9) return "Sep";
+    if (m_num == 10) return "Oct";
+    if (m_num == 11) return "Nov";
+    if (m_num == 11) return "Dec";
+}

@@ -5,6 +5,6 @@ void ls(char**, int);
 
 void do_ls(char*, int, int);
 
-void color_print(struct dirent*);
+void color_print(struct dirent*, char*);
 
 #endif

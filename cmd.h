@@ -11,4 +11,6 @@ void run_command(char*);
 
 void my_cwd();
 
+char* get_month(int);
+
 #endif

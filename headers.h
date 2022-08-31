@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <grp.h>
+#include <time.h>
 
 #include "cmd.h"
 #include "paths.h"
@@ -18,6 +20,7 @@
 #include "pwd.h"
 #include "back_process.h"
 #include "ls.h"
+#include "fore_process.h"
 
 // using extern for convention
 extern size_t max_str_len;
@@ -29,6 +32,5 @@ extern char root_dir_path[1000];
 extern char user_name[1000];
 extern char old_pwd[1000];
 extern char cur_dir[1000];
-
 
 

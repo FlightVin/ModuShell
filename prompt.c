@@ -21,8 +21,8 @@ void prompt(){
 
     relative_path(cur_dir, display_path);
 
-    printf(" \033[0;33m");
-    printf("<%s@%s:%s>", user_name, system_name, display_path);
-    printf(" \033[0m");
+    printf("\033[33m");
+    printf("<%s@%s:%s> ", user_name, system_name, display_path);
+    printf("\033[0m");
 }
 
