@@ -1,4 +1,4 @@
-objects = main.o headers.o cmd.o prompt.o error_mes.o path.o echo.o cd.o pwd.o back_process.o ls.o fore_process.o pinfo.o dll.o
+objects = main.o headers.o cmd.o prompt.o error_mes.o path.o echo.o cd.o pwd.o back_process.o ls.o fore_process.o pinfo.o dll.o history.o
 
 main: $(objects)
 	gcc -o main $(objects)
@@ -30,6 +30,8 @@ fore_process.o : fore_process.c fore_process.h headers.h
 pinfo.o : pinfo.c pinfo.h headers.h
 
 dll.o : dll.c dll.h headers.h
+
+history.o : history.c history.h headers.h
 
 clean:
 	rm main $(objects)

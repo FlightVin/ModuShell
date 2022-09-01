@@ -11,5 +11,3 @@ char old_pwd[1000] = "\0";
 char cur_dir[1000] = "\0";
 
 long process_exec_time = 0;
-
-size_t background_process_num = 0;

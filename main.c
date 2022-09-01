@@ -1,6 +1,9 @@
 #include "headers.h"
+#include "dll.h"
 
 int main(){
+    running_background_processes = make_dll();
+
     char* input_message;
     char cur_command[command_len];
     char command_name[command_len];

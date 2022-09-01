@@ -40,7 +40,7 @@ void run_command(char* cur_command){
     } else if (strcmp(main_command, "ls") == 0){
         ls(&argument_list[1], num_arguments - 1);
     } else if (strcmp(main_command, "pinfo") == 0){
-        pinfo(argument_list);
+        pinfo(&argument_list[1], num_arguments - 1);
     }
 
     else {

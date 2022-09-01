@@ -23,10 +23,14 @@ void pop_dll(DLL);
 
 void delete_from_dll(DLL, pid_t);
 
+void delete_node(DLL, DLLNode);
+
 DLLNode make_node(pid_t, char*);
 
 DLL make_dll();
 
 void free_node(DLLNode);
+
+DLLNode find_node(DLL, pid_t);
 
 #endif
