@@ -39,7 +39,7 @@ void pinfo(char** argument_list, int num_arguments){
 
     char process_state[3];
     sprintf(process_state, "%c", char_process_state);
-    if (find_node(running_background_processes, cur_pid)){
+    if (find_node(running_background_processes, cur_pid) == NULL){
         strcat(process_state, "+");
     }
 

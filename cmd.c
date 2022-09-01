@@ -17,6 +17,7 @@ int detect_amp(char* str){
 }
 
 void my_quit(){
+    store_history();
     exit(EXIT_SUCCESS);
 }
 
@@ -28,6 +29,8 @@ void run_command(char* cur_command){
     
     if (num_arguments == 0) return;
     char* main_command = strdup(argument_list[0]);
+
+    add_to_history(parse_to_string(argument_list, num_arguments), default_history_storage_size);
 
     if (strcmp(main_command, "echo") == 0){
         echo(&argument_list[1], num_arguments - 1);
@@ -41,6 +44,8 @@ void run_command(char* cur_command){
         ls(&argument_list[1], num_arguments - 1);
     } else if (strcmp(main_command, "pinfo") == 0){
         pinfo(&argument_list[1], num_arguments - 1);
+    } else if (strcmp(main_command, "history") == 0){
+        history(default_history_display_num);
     } 
 
     else {
@@ -65,4 +70,17 @@ char* get_month(int m_num){
     if (m_num == 10) return "Oct";
     if (m_num == 11) return "Nov";
     if (m_num == 11) return "Dec";
+}
+
+char* parse_to_string(char** args_list, int arg_num){
+    char* ret_string = (char*) malloc(sizeof(char) * max_str_len);
+
+    strcpy(ret_string, args_list[0]);
+
+    for (int i = 1; i<arg_num; i++){
+        strcat(ret_string, " ");
+        strcat(ret_string, args_list[i]);
+    }
+
+    return ret_string;
 }

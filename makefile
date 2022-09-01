@@ -34,4 +34,4 @@ dll.o : dll.c dll.h headers.h
 history.o : history.c history.h headers.h
 
 clean:
-	rm main $(objects)
+	rm main $(objects) .history_storage_file

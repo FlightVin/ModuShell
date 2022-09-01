@@ -45,4 +45,9 @@ extern long process_exec_time;
 
 // For background process handling
 struct dll* running_background_processes;
+
+// for history
 struct dll* history_queue;
+extern int default_history_storage_size;
+extern int default_history_display_num;
+extern char history_storage_file[1000];

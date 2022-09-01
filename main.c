@@ -3,6 +3,7 @@
 
 int main(){
     running_background_processes = make_dll();
+    history_queue = init_history();
 
     char* input_message;
     char cur_command[command_len];
@@ -19,7 +20,7 @@ int main(){
         prompt();
         fflush(stdout);
 
-        size_t input_len = 1e3;
+        size_t input_len = max_str_len;
         getline(&input_message, &input_len, stdin);
 
         size_t no_space = strlen(input_message) - 1;

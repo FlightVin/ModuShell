@@ -13,4 +13,6 @@ void my_cwd();
 
 char* get_month(int);
 
+char* parse_to_string(char**, int);
+
 #endif
