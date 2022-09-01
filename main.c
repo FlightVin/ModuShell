@@ -11,7 +11,10 @@ int main(){
     getcwd(root_dir_path, max_str_len);
 
     while(1){
-        prompt(root_dir_path);
+        signal(SIGCHLD, background_process_term);
+
+        prompt();
+        fflush(stdout);
 
         size_t input_len = 1e3;
         getline(&input_message, &input_len, stdin);
@@ -37,8 +40,7 @@ int main(){
                 my_strtok(background_list, &num_background, "&", cur_command);
 
                 for (int i = 0; i<num_background-1; i++){
-                    puts(background_list[i - 1]);
-                    run_cmd_background(background_list[i - 1]);
+                    run_cmd_background(background_list[i]);
                 }
 
                 if (flag){
