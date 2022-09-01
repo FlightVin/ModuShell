@@ -34,11 +34,13 @@ void run_command(char* cur_command){
     } else if (strcmp(main_command, "cd") == 0){
         cd(&argument_list[1], num_arguments - 1);
     } else if (strcmp(main_command, "pwd") == 0){
-        pwd(&argument_list[1], num_arguments - 1); //NOTE - HOME is pseudo home, home is actual home
+        pwd(&argument_list[1], num_arguments - 1);
     } else if (strcmp(main_command, "quit") == 0 || strcmp(main_command, "exit") == 0){
         my_quit();
     } else if (strcmp(main_command, "ls") == 0){
         ls(&argument_list[1], num_arguments - 1);
+    } else if (strcmp(main_command, "pinfo") == 0){
+        pinfo(argument_list);
     }
 
     else {

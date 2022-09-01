@@ -15,5 +15,6 @@ struct back_process{
 };
 
 typedef struct back_process BackProcess;
+typedef struct back_process* ProcessPtr;
 
 #endif

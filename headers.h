@@ -23,6 +23,8 @@
 #include "back_process.h"
 #include "ls.h"
 #include "fore_process.h"
+#include "pinfo.h"
+#include "dll.h"
 
 // using extern for convention
 
