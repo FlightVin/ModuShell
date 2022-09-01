@@ -68,4 +68,4 @@ NOTE - currently, handles & as ;
         `$ exit`
 
 
-https://www.tecmint.com/exploring-proc-file-system-in-linux/ (Stumbled across it while exploring /proc)
+https://man7.org/linux/man-pages/man5/proc.5.html (Stumbled across it while exploring /proc)

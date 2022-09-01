@@ -41,7 +41,7 @@ void run_command(char* cur_command){
         ls(&argument_list[1], num_arguments - 1);
     } else if (strcmp(main_command, "pinfo") == 0){
         pinfo(&argument_list[1], num_arguments - 1);
-    }
+    } 
 
     else {
         run_in_foreground(argument_list);
