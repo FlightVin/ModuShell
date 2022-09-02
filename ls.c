@@ -3,6 +3,13 @@
 #include "ls.h"
 #include "cmd.h"
 
+int compare_str(const void* a, const void* b){
+    char* l = *((char**) a);
+    char* r = *((char**) b);
+
+    return strcasecmp(l, r);
+}
+
 void ls(char** passed_args, int num_args){
     char* dir_names[max_arg_length];
     size_t dir_num = 0;
@@ -54,6 +61,8 @@ void ls(char** passed_args, int num_args){
             return;
         }
     }
+
+    qsort(dir_names, dir_num, sizeof(dir_names[0]), compare_str);
 
     // else
     do_ls(dir_names[0], l_flag, a_flag);
