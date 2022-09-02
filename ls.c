@@ -59,13 +59,10 @@ void ls(char** passed_args, int num_args){
 }
 
 int comparator(const void* a, const void* b){
-    char* l = ((struct dirent*)a)->d_name;
-    char* r = ((struct dirent*)b)->d_name;
+    char* l = (*(struct dirent**)a)->d_name;
+    char* r = (*(struct dirent**)b)->d_name;
 
-    // if (l[0] == '.') l[0] = '\0';
-    // if (r[0] == '.') r[0] = '\0';
-
-    return strcmp(a, b);
+    return strcasecmp(l, r);
 }
 
 // Test this - ls -al /mnt ~/dir1 ./dir1 ../C-shell/dir2 dir2 kjlsd
@@ -102,7 +99,7 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
         dir_struct = readdir(dir_stream);
     }
 
-    qsort((void*)dir_list, dir_num, sizeof(dir_list[0]), comparator);
+    qsort(dir_list, dir_num, sizeof(struct dirent*), comparator);
 
     if (l_flag == 0){
         for (int i = 0; i<dir_num; i++){
@@ -176,17 +173,29 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
                 else printf("-");
 
                 // Hardlinks
-                printf(" %ld", stat_struct.st_nlink);
+                printf(" %4ld", stat_struct.st_nlink);
 
                 // Owndership
-                printf(" %s %s", getpwuid(stat_struct.st_uid)->pw_name, getgrgid(stat_struct.st_gid)->gr_name);
+                printf(" %-10s %-10s", getpwuid(stat_struct.st_uid)->pw_name, getgrgid(stat_struct.st_gid)->gr_name);
 
                 // Size
                 printf(" %7ld", stat_struct.st_size); // Allocating 7 as that's the maximum on my machine
 
                 // last modification time
                 struct tm* ret_time = localtime(&stat_struct.st_mtime);
-                printf(" %s %d %d:%d ", get_month(ret_time->tm_mon), ret_time->tm_mday, ret_time->tm_hour, ret_time->tm_min);
+                int last_hour = ret_time->tm_hour;
+                int last_min = ret_time->tm_min;
+
+                char last_hour_str[3], last_min_str[3];
+                if (last_hour < 10){
+                    sprintf(last_hour_str, "%c%d", '0', last_hour);
+                } else sprintf(last_hour_str, "%d", last_hour);
+                if (last_min < 10){
+                    sprintf(last_min_str, "%c%d", '0', last_min);
+                } else sprintf(last_min_str, "%d", last_min);
+                
+
+                printf(" %s %2d %s:%s ", get_month(ret_time->tm_mon), ret_time->tm_mday, last_hour_str, last_min_str);
 
                 color_print(dir_list[i], cur_path);
                 

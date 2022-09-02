@@ -1,4 +1,4 @@
-objects = main.o headers.o cmd.o prompt.o error_mes.o path.o echo.o cd.o pwd.o back_process.o ls.o fore_process.o pinfo.o dll.o history.o
+objects = main.o headers.o cmd.o prompt.o error_mes.o path.o echo.o cd.o pwd.o back_process.o ls.o fore_process.o pinfo.o dll.o history.o discover.o
 
 main: $(objects)
 	gcc -o main $(objects)
@@ -32,6 +32,8 @@ pinfo.o : pinfo.c pinfo.h headers.h
 dll.o : dll.c dll.h headers.h
 
 history.o : history.c history.h headers.h
+
+discover.o : discover.c discover.h headers.h
 
 clean:
 	rm main $(objects) .history_storage_file

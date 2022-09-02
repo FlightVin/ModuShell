@@ -46,6 +46,8 @@ void run_command(char* cur_command){
         pinfo(&argument_list[1], num_arguments - 1);
     } else if (strcmp(main_command, "history") == 0){
         history(default_history_display_num);
+    } else if (strcmp(main_command, "discover") == 0){
+        discover(&argument_list[1], num_arguments - 1);
     } 
 
     else {

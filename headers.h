@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <sys/utsname.h> // Fr=or uname
+#include <sys/utsname.h>
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -26,9 +26,9 @@
 #include "pinfo.h"
 #include "dll.h"
 #include "history.h"
+#include "discover.h"
 
 // using extern for convention
-
 // Generic variables
 extern size_t max_str_len;
 extern size_t command_len;
