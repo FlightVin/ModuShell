@@ -17,13 +17,13 @@ struct dll_node{
     DLLNode next_node;
 };
 
-void insert_dll(DLL, pid_t, char*);
-void deque_dll(DLL);
-void pop_dll(DLL);
+void insert_dll(DLL, pid_t, char*); // pushes a new node with given parameters into dll
+void deque_dll(DLL); // removes the first node from dll
+void pop_dll(DLL); // rmeoves last node from dll
 
-void delete_from_dll(DLL, pid_t);
+void delete_from_dll(DLL, pid_t); // removes a particular node from dll
 
-void delete_node(DLL, DLLNode);
+void delete_node(DLL, DLLNode); // removed a particular node from dll given pointer
 
 DLLNode make_node(pid_t, char*);
 
