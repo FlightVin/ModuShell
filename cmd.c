@@ -22,6 +22,8 @@ void my_quit(){
 }
 
 void run_command(char* cur_command){
+    add_to_history(cur_command, default_history_storage_size);
+
     char* argument_list[max_arg_length];
     char* old_argument = strdup(cur_command);
     int num_arguments;
@@ -29,8 +31,6 @@ void run_command(char* cur_command){
     
     if (num_arguments == 0) return;
     char* main_command = strdup(argument_list[0]);
-
-    add_to_history(parse_to_string(argument_list, num_arguments), default_history_storage_size);
 
     if (strcmp(main_command, "echo") == 0){
         echo(&argument_list[1], num_arguments - 1);
@@ -48,7 +48,7 @@ void run_command(char* cur_command){
         history(default_history_display_num);
     } else if (strcmp(main_command, "discover") == 0){
         discover(&argument_list[1], num_arguments - 1);
-    } 
+    }
 
     else {
         run_in_foreground(argument_list);

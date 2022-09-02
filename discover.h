@@ -3,4 +3,6 @@
 
 void discover(char**, int);
 
+void my_discover(char*, char*, int, int, int);
+
 #endif

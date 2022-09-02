@@ -15,8 +15,6 @@ int main(){
     getcwd(root_dir_path, max_str_len);
 
     while(1){
-        signal(SIGCHLD, background_process_term);
-
         prompt();
         fflush(stdout);
 
@@ -57,6 +55,9 @@ int main(){
             }
         }
 
+        fflush(stdout);
+
+        signal(SIGCHLD, background_process_term);
         fflush(stdout);
     }
     
