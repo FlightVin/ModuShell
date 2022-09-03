@@ -29,8 +29,13 @@ int main(){
         // Handling seg fault for trailing spaces
         input_message[no_space] = '\0';
 
+        add_to_history(input_message, default_history_storage_size);
+
         int num_commands;
         my_strtok(command_list, &num_commands, ";\n", input_message);
+
+        // starting timer
+        time_t process_begin_clock = time(NULL);
 
         for (int cmd_index = 0; cmd_index < num_commands; cmd_index++){
             strcpy(cur_command, command_list[cmd_index]);
@@ -56,6 +61,10 @@ int main(){
         }
 
         fflush(stdout);
+
+        // Ending process
+        time_t process_end_clock = time(NULL);
+        process_exec_time = process_end_clock - process_begin_clock;
 
         signal(SIGCHLD, background_process_term);
         fflush(stdout);

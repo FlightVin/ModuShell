@@ -50,11 +50,12 @@ void discover(char** argument_list, int argument_num){
         strcpy(dir_path, ".");
     }
 
+    int is_found = 0;
     // printf("%s %s %d %d\n", dir_path, search_path, f_flag, d_flag);
-    my_discover(dir_path, search_path, d_flag, f_flag, search_flag);
+    my_discover(dir_path, search_path, d_flag, f_flag, search_flag, &is_found);
 }
 
-void my_discover(char* dir_path, char* search_path, int d_flag, int f_flag, int search_flag){
+void my_discover(char* dir_path, char* search_path, int d_flag, int f_flag, int search_flag, int* is_found){
 
     char absolute_dir_path[max_str_len];
     // absolute_path()

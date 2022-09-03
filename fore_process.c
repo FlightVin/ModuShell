@@ -12,14 +12,8 @@ void run_in_foreground(char** argument_list){
         }
         exit(EXIT_SUCCESS);
     } else {
-
-        time_t process_begin_clock = time(NULL);
-
         int process_status;
         waitpid(fore_pid,&process_status,WUNTRACED);
-
-        time_t process_end_clock = time(NULL);
-        process_exec_time = process_end_clock - process_begin_clock;
     }
 
 }

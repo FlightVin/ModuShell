@@ -22,8 +22,6 @@ void my_quit(){
 }
 
 void run_command(char* cur_command){
-    add_to_history(cur_command, default_history_storage_size);
-
     char* argument_list[max_arg_length];
     char* old_argument = strdup(cur_command);
     int num_arguments;
