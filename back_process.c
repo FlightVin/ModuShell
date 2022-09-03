@@ -44,10 +44,10 @@ void background_process_term(){
 
         if (WIFEXITED(status)){
             printf("Normally\n");
-            // fprintf(stderr, "Process: %s PID: %d -> exited with status %d\n", background_process_queue[i].process_name, background_process_queue[i].process_pid, WEXITSTATUS(status));
+            fprintf(stderr, "Process: %s PID: %d -> exited with status %d\n", req_node->element->process_name, req_node->element->process_pid, WEXITSTATUS(status));
         } else {
             printf("Abnormally\n");
-            // fprintf(stderr, "Process: %s PID: %d -> FAILED\n", background_process_queue[i].process_name, background_process_queue[i].process_pid);
+            fprintf(stderr, "Process: %s PID: %d -> FAILED\n", req_node->element->process_name, req_node->element->process_pid);
         }
 
         delete_node(running_background_processes, req_node);

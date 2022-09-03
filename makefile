@@ -36,4 +36,4 @@ history.o : history.c history.h headers.h
 discover.o : discover.c discover.h headers.h
 
 clean:
-	rm main $(objects) .history_storage_file
+	rm main $(objects) .history_storage_file .shell_stderr

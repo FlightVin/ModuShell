@@ -12,6 +12,10 @@ int main(){
 
     getcwd(root_dir_path, max_str_len);
 
+    // redirecting stderr
+    freopen(".shell_stderr", "w", stderr);
+    fprintf(stderr, "\n\n ---------- start of shell execution at system time ---------- %ld\n\n", time(NULL));
+
     while(1){
         prompt();
         fflush(stdout);
@@ -27,7 +31,7 @@ int main(){
         // Handling seg fault for trailing spaces
         input_message[no_space] = '\0';
 
-        add_to_history(input_message, default_history_storage_size);
+        if (strlen(input_message) != 0) add_to_history(input_message, default_history_storage_size);
 
         // starting timer
         time_t process_begin_clock = time(NULL);
