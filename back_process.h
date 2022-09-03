@@ -1,9 +1,9 @@
 #ifndef _BACK_H_
 #define _BACK_H_
 
-void run_cmd_background(char*); // tokenizes arguments and presents to run_in_background
+void run_back_background(char*); // tokenizes arguments and presents to run_in_background
 
-void run_in_background(char**); // runs given process in background
+void run_in_background(char**, int); // runs given process in background
 
 void background_process_term(); // run when a child is detected to have terminated
 

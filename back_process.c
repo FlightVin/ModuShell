@@ -1,16 +1,21 @@
 #include "headers.h"
 #include "back_process.h"
 
-void run_cmd_background(char* cur_command){
+void run_back_background(char* cur_command){
     char* argument_list[max_arg_length];
     char* old_argument = strdup(cur_command);
     int num_arguments;
     my_strtok(argument_list, &num_arguments, " \n\t", cur_command);
-    run_in_background(argument_list);
+    run_in_background(argument_list, num_arguments);
 }
 
-void run_in_background(char** argument_list){
+void run_in_background(char** argument_list, int argument_num){
     
+    if (argument_num == 0){
+        printf("syntax error near unexpected token `&`\n");
+        return;
+    }
+
     pid_t back_pid = fork();
 
     if (back_pid < 0){

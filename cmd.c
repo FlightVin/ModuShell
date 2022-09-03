@@ -27,7 +27,11 @@ void run_command(char* cur_command){
     int num_arguments;
     my_strtok(argument_list, &num_arguments, " \n\t", cur_command);
     
-    if (num_arguments == 0) return;
+    if (num_arguments == 0){
+        printf("syntax error near unexpected token `;`\n");
+        return;
+    }
+    
     char* main_command = strdup(argument_list[0]);
 
     if (strcmp(main_command, "echo") == 0){

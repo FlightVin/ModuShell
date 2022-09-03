@@ -6,9 +6,7 @@ int main(){
     history_queue = init_history();
 
     char* input_message;
-    char cur_command[command_len];
-    char command_name[command_len];
-
+    char cur_command[max_str_len];
     char* command_list[max_arg_length];
     char* background_list[max_arg_length];
 
@@ -31,11 +29,13 @@ int main(){
 
         add_to_history(input_message, default_history_storage_size);
 
-        int num_commands;
-        my_strtok(command_list, &num_commands, ";\n", input_message);
-
         // starting timer
         time_t process_begin_clock = time(NULL);
+
+        // legacy code which supports things but gives ; more priority than &
+        /*
+        int num_commands;
+        my_strtok(command_list, &num_commands, ";\n", input_message);
 
         for (int cmd_index = 0; cmd_index < num_commands; cmd_index++){
             strcpy(cur_command, command_list[cmd_index]);
@@ -58,6 +58,32 @@ int main(){
             }else{
                 run_command(cur_command);
             }
+        }
+        */
+
+        char command_buffer[max_str_len];
+        int command_length = 0;
+        strcpy(command_buffer, "");
+
+        for (int i = 0; i<=no_space; i++){
+            if (input_message[i] != ';' && input_message[i] != '&'){
+                command_buffer[command_length++] = input_message[i];
+            } else {
+                command_buffer[command_length++] = '\0';
+
+                if (input_message[i] == ';'){
+                    run_command(command_buffer);
+                } else {
+                    run_back_background(command_buffer);
+                }
+
+                strcpy(command_buffer, "");
+                command_length = 0;
+            }
+        }
+
+        if (strlen(command_buffer) != 0){
+            run_command(command_buffer);
         }
 
         fflush(stdout);
