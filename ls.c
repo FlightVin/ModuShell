@@ -219,7 +219,7 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
             }            
         }
 
-        printf("total %ld\n", total_val);
+        printf("total %ld\n", total_val/2); // diving by 2 to account for block size in my terminal
 
         for (int i = 0; i<dir_num; i++){
 
@@ -272,6 +272,9 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
 
                 // last modification time
                 struct tm* ret_time = localtime(&stat_struct.st_mtime);
+                
+                // redundant code -> dates aren't par
+                /*
                 int last_hour = ret_time->tm_hour;
                 int last_min = ret_time->tm_min;
 
@@ -283,11 +286,19 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
                     sprintf(last_min_str, "%c%d", '0', last_min);
                 } else sprintf(last_min_str, "%d", last_min);
                 
+                // getting current year
+                time_t dummy_time = time(NULL);
+                struct tm* cur_time = localtime(&dummy_time);
 
-                printf(" %s %2d %s:%s ", get_month(ret_time->tm_mon), ret_time->tm_mday, last_hour_str, last_min_str);
+                if (cur_time->tm_year == ret_time->tm_year) printf(" %s %2d %s:%s ", get_month(ret_time->tm_mon), ret_time->tm_mday, last_hour_str, last_min_str);
+                else printf(" %s %2d  %d ", get_month(ret_time->tm_mon), ret_time->tm_mday, ret_time->tm_year);
+                */
+
+                char date_string[20];
+                strftime(date_string, 20, "%h %d %H:%M", ret_time);
+                printf(" %s ", date_string);
 
                 color_print(dir_list[i], cur_path);
-                
 
                 printf("\n");
             } else {
