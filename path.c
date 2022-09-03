@@ -63,3 +63,35 @@ void absolute_path(char* given_path, char* ret_path){
         }
     }
 }
+
+void relative_path_to_cwd(char* current_path, char* display_path){
+    my_cwd();
+
+    if (strcmp(current_path, cur_dir) == 0){
+        strcpy(display_path, "~");
+        return;
+    }
+
+    size_t first_deviation = 0, min_len = strlen(cur_dir) < strlen(current_path) ? strlen(cur_dir) : strlen(current_path);
+    while(first_deviation < min_len && cur_dir[first_deviation] == current_path[first_deviation]) first_deviation++;
+
+    if (first_deviation == strlen(cur_dir)){
+        display_path[0] = '~';
+        int i = 1;
+        for (int j = strlen(cur_dir); j<strlen(current_path); i++, j++){
+            display_path[i] = current_path[j];
+        }
+        display_path[i] = '\0';
+
+        if (strlen(display_path) > 1 && display_path[strlen(display_path) - 1] == '/'){
+            display_path[strlen(display_path) - 1] = '\0';
+        }
+
+        return;
+    }
+
+    strcpy(display_path, current_path);
+    if (strlen(display_path) > 1 && display_path[strlen(display_path) - 1] == '/'){
+        display_path[strlen(display_path) - 1] = '\0';
+    }
+}

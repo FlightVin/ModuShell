@@ -65,7 +65,7 @@ void discover_ls(char* dir_path, int d_flag, int f_flag, int search_flag, char* 
     absolute_path(dir_path, abs_dir_path);
 
     char rel_dir_path[max_str_len];
-    relative_path(dir_path, rel_dir_path);
+    relative_path_to_cwd(dir_path, rel_dir_path);
 
     struct stat stat_struct;
     if (stat(abs_dir_path, &stat_struct) != 0){
@@ -94,7 +94,7 @@ void discover_ls(char* dir_path, int d_flag, int f_flag, int search_flag, char* 
 
         if (dir_struct->d_name[0] != '.'){
             char rel_cur_path[max_str_len];
-            relative_path(cur_path, rel_cur_path);
+            relative_path_to_cwd(cur_path, rel_cur_path);
 
             stat(cur_path, &stat_struct);
             
