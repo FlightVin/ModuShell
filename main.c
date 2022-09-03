@@ -13,8 +13,8 @@ int main(){
     getcwd(root_dir_path, max_str_len);
 
     // redirecting stderr
-    freopen(".shell_stderr", "w", stderr);
-    fprintf(stderr, "\n\n ---------- start of shell execution at system time ---------- %ld\n\n", time(NULL));
+    // freopen(".shell_stderr", "w", stderr);
+    // fprintf(stderr, "\n\n ---------- start of shell execution at system time ---------- %ld\n\n", time(NULL));
 
     while(1){
         prompt();

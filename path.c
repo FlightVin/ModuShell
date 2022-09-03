@@ -8,7 +8,7 @@ void relative_path(char* current_path, char* display_path){
     }
 
     size_t first_deviation = 0, min_len = strlen(root_dir_path) < strlen(current_path) ? strlen(root_dir_path) : strlen(current_path);
-    while(root_dir_path[first_deviation] == current_path[first_deviation]) first_deviation++;
+    while(first_deviation < min_len && root_dir_path[first_deviation] == current_path[first_deviation]) first_deviation++;
 
     if (first_deviation == strlen(root_dir_path)){
         display_path[0] = '~';
@@ -17,10 +17,18 @@ void relative_path(char* current_path, char* display_path){
             display_path[i] = current_path[j];
         }
         display_path[i] = '\0';
+
+        if (strlen(display_path) > 1 && display_path[strlen(display_path) - 1] == '/'){
+            display_path[strlen(display_path) - 1] = '\0';
+        }
+
         return;
     }
 
     strcpy(display_path, current_path);
+    if (strlen(display_path) > 1 && display_path[strlen(display_path) - 1] == '/'){
+        display_path[strlen(display_path) - 1] = '\0';
+    }
 }
 
 void absolute_path(char* given_path, char* ret_path){
@@ -48,6 +56,10 @@ void absolute_path(char* given_path, char* ret_path){
             strcpy(ret_path, cur_dir);
             strcat(ret_path, "/");
             strcat(ret_path, given_path);
+        }
+
+        if (strlen(ret_path) > 1 && ret_path[strlen(ret_path) - 1] == '/'){
+            ret_path[strlen(ret_path) - 1] = '\0';
         }
     }
 }
