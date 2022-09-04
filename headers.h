@@ -50,4 +50,5 @@ struct dll* running_background_processes;
 struct dll* history_queue;
 extern int default_history_storage_size;
 extern int default_history_display_num;
-extern char history_storage_file[1000];
+extern char history_storage_file_name[1000];
+extern char history_storage_file[2000];

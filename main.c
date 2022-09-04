@@ -2,6 +2,7 @@
 #include "dll.h"
 
 int main(){
+    getcwd(root_dir_path, max_str_len); 
     running_background_processes = make_dll();
     history_queue = init_history();
 
@@ -9,8 +10,6 @@ int main(){
     char cur_command[max_str_len];
     char* command_list[max_arg_length];
     char* background_list[max_arg_length];
-
-    getcwd(root_dir_path, max_str_len);
 
     // redirecting stderr
     // freopen(".shell_stderr", "w", stderr);

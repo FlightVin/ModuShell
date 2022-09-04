@@ -14,4 +14,5 @@ long process_exec_time = 0;
 
 int default_history_storage_size = 20;
 int default_history_display_num = 10;
-char history_storage_file[1000] = "./.history_storage_file";
+char history_storage_file_name[1000] = ".history_storage_file";
+char history_storage_file[2000];
