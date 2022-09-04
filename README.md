@@ -14,10 +14,8 @@ Making a shell in C programming language
 3. Enter commands separted by ; or & just as you would in a unix terminal
     * `$ command1 arguments & command2 arguments`
     * `$ command1 arguments; command2     arguments   ; command3  arguments ...`
-    * And so on
+    * A command ending with a ; will be executed in the foreground while a command ending in & will executed in background. If no such character is present at the end, then the command is run in foreground.
 4. To remove all .o and main file run `$ make clean`
-
-NOTE - currently, handles & as ;
 
 ---
 
@@ -36,7 +34,7 @@ NOTE - currently, handles & as ;
         `>>> hello     there!`
     
 2. **`cd`**
-    * _Output_ : Changes current directory to 
+    * _Output_ : Changes current directory to given directory
     * _Syntax_ :
 
         `$ cd` : changes to home directory
@@ -69,5 +67,69 @@ NOTE - currently, handles & as ;
 
         `$ exit`
 
+5. **`ls`**
+    * _Output_ : 
 
-https://man7.org/linux/man-pages/man5/proc.5.html (Stumbled across it while exploring /proc)
+        * Paths - 
+        
+            * If no path is given, lists files and directories in current directory.
+
+            * If path of a directory is given, lists files and directories in given directory.
+
+            * If path of a file is given, lists information about the file
+
+            * If the path is invalid, throws an error
+
+        * Flags - 
+
+            * -l lists all relevant information about path
+
+            * -a lists all the hidden files and folders too
+
+    * _Syntax_ :
+
+        `$ ls -<flags> <dir_name>` : changes to home directory
+
+6. **`pinfo`**
+    * _Output_ : Prints the relevant information about the given pid (taken as shell's pid if no pid is provided):
+
+        * process id
+
+        * process status (R for running, S for sleeping, Z for zombie; Append '+' if process is run in foreground)
+
+        * memory usage
+
+        * executable path
+
+    * _Syntax_ : 
+    
+        `$ pinfo <pid>`
+
+7. **`history`**
+    * _Output_ : Displays upto 10 previously executed commands in terminal. Included commands from previous runs of the shell as well.
+    * _Syntax_ :
+
+        `$ history`
+
+8. **`discover`**
+    * _Output_ : 
+
+        * Paths - 
+        
+            * If no directory path is given, uses current directory
+
+            * If no search path is given, lists files and directories in given directory based on flags
+
+            * If the path is invalid, throws an error
+
+        * Flags - 
+
+            * -f lists/searches only files
+
+            * -d lists/searches only directories
+
+    * _Syntax_ :
+
+        `$ discover -<flags> <dir_name>` : changes to home directory
+
+9. Any other process is run as in linux terminal using `execvp`

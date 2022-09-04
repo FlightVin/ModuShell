@@ -273,7 +273,7 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
                 // last modification time
                 struct tm* ret_time = localtime(&stat_struct.st_mtime);
                 
-                // redundant code -> dates aren't par
+                // redundant code -> dates aren't parsed properly
                 /*
                 int last_hour = ret_time->tm_hour;
                 int last_min = ret_time->tm_min;

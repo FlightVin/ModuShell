@@ -61,6 +61,7 @@ void my_cwd(){
     getcwd(cur_dir, max_str_len);
 }
 
+// redunant
 char* get_month(int m_num){
     if (m_num == 1) return "Jan";
     if (m_num == 2) return "Feb";
