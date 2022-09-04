@@ -123,4 +123,5 @@ void discover_ls(char* dir_path, int d_flag, int f_flag, int search_flag, char* 
 
         dir_struct = readdir(dir_stream);
     }
+    closedir(dir_stream);
 }
