@@ -5,7 +5,17 @@ Making a shell in C programming language
 
 > To see timeline of progress : https://github.com/FlightVin/C-Shell (NOTE - private directory, so, please email vineeth.bhat@students.iiit.ac.in for accessing rights)
 
-***
+---
+
+### _Legend_ :
+
+1. How to run shell
+
+2. Commands accepted in shell
+
+3. About files 
+
+---
 
 ## Running shell
 
@@ -14,8 +24,8 @@ Making a shell in C programming language
 3. Enter commands separted by ; or & just as you would in a unix terminal
     * `$ command1 arguments & command2 arguments`
     * `$ command1 arguments; command2     arguments   ; command3  arguments ...`
-    * A command ending with a ; will be executed in the foreground while a command ending in & will executed in background. If no such character is present at the end, then the command is run in foreground.
-4. To remove all .o and main file run `$ make clean`
+    * A command ending with a `;` will be executed in the foreground while a command ending in `&` will executed in background. If no such character is present at the end, then the command is run in foreground.
+4. To remove all .o files, main file and history file (hidden) run `$ make clean`
 
 ---
 
@@ -128,8 +138,64 @@ Making a shell in C programming language
 
             * -d lists/searches only directories
 
+        * CANNOT search for hidden files and folders
+
     * _Syntax_ :
 
         `$ discover -<flags> <dir_name>` : changes to home directory
 
 9. Any other process is run as in linux terminal using `execvp`
+
+---
+
+## Files
+
+A filename refers to both the .c as well as the .h files
+
+1. **back_process**
+    * Functionality to run a process in background, handle termination of a background process and add ackground processes to a linked list for execution.
+
+2. **cd**
+    * Functionality to change directory
+
+3. **cmd**
+    * Functionality to execute a process in background, exit terminal and tokenise inputs
+
+4. **discover**
+    * Functionality to search for a given file or directory based on input arguments and flags
+
+5. **dll**
+    * Functionality to create and manipulate linked lists, to store a structs of char* and int, in order to handle history queue and background process execution
+
+6. **echo**
+    * Functionality to print the given message after removing tabs and spaces
+
+7. **error_mes**
+    * Functionality to perror a message and exit terminal with EXIT_FALIURE : reserved for things which if not implemented, prevent the shell from functioning at all
+
+8. **fore_process**
+    * Functionality to execute a non-builtin command in foreground using execvp
+
+9. **headers**
+    * Lists all headers file which are imported in every file and the variables used throughout the shell
+
+10. **history**
+    * Functionality to display history command's outputs, add an input to the history queue, initiate history queue from hidden storage file from previous run of shell and store contents in hidden file upon exiting shell
+
+11. **ls**
+    * Lists files and directories in given directory, or lists information about given file, based on flags
+
+12. **main**
+    * No main.h exists. Main driver code.
+
+13. **path**
+    * Functionality to get relative path wrt root directory or current directory, and to get absolute path from relative path wrt root directory.
+
+14. **pinfo**
+    * Functionality to implement pinfo
+
+15. **prompt**
+    * Functionlity to display shell prompt
+
+16. **pwd**
+    * Functionality to display absolute path of present working directory

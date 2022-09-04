@@ -9,6 +9,7 @@ void my_strtok(char** list, int* num, char* args, char* in_data){
     }
 }
 
+// redundant 
 int detect_amp(char* str){
     for (int i = 0; i<strlen(str); i++){
         if (str[i] == '&') return 1;
