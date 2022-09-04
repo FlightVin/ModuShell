@@ -30,7 +30,6 @@ void history(int display_num){
 
 struct dll* init_history(){
     sprintf(history_storage_file, "%s/%s", root_dir_path, history_storage_file_name);
-    puts(history_storage_file);
 
     FILE* storage_file_stream = fopen(history_storage_file, "r");
 
