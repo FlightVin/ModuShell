@@ -32,9 +32,6 @@ int main(){
 
         if (strlen(input_message) != 0) add_to_history(input_message, default_history_storage_size);
 
-        // starting timer
-        time_t process_begin_clock = time(NULL);
-
         // legacy code which supports things but gives ; more priority than &
         /*
         int num_commands;
@@ -90,10 +87,6 @@ int main(){
         }
 
         fflush(stdout);
-
-        // Ending process
-        time_t process_end_clock = time(NULL);
-        process_exec_time = process_end_clock - process_begin_clock;
 
         signal(SIGCHLD, background_process_term);
         fflush(stdout);

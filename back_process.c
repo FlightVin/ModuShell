@@ -21,6 +21,7 @@ void run_in_background(char** argument_list, int argument_num){
     if (back_pid < 0){
         perror("Could not create forked process");
     } else if (back_pid == 0){
+        setpgrp();
         if ( execvp(argument_list[0], argument_list) < 0){
             printf("\nBackground process - Command not found\n");
         }

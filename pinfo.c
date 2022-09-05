@@ -10,8 +10,6 @@ void pinfo(char** argument_list, int num_arguments){
         cur_pid = atoi(argument_list[0]);
     }
 
-    printf("pid : %d\n", cur_pid);
-
     // checking status file of pid
     char file_path[max_str_len];
     sprintf(file_path, "/proc/%d/stat", cur_pid);
@@ -23,23 +21,16 @@ void pinfo(char** argument_list, int num_arguments){
         return;
     }
 
-    // Reading pid from /proc/[pid]/stat
-    int pid_from_file;
-    fscanf(stat_file_stream, "%d", &pid_from_file);
-
-    // Reading COMM - filename of executale from /proc/[pid]/stat
-    char stat_exec_file_name[max_str_len];
-    fscanf(stat_file_stream, "%s", stat_exec_file_name);
-
-    // Reading state from /proc/[pid]/stat
+    int virtual_memory_size, group_pid, fore_process_pid;
     char char_process_state;
-    fscanf(stat_file_stream, "%c", &char_process_state);
-    // reading twice to remove intermediate character
-    fscanf(stat_file_stream, "%c", &char_process_state);
+
+    fscanf(stat_file_stream, "%d %*s %c %*s %d %*s %*s %d %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %d", &cur_pid, &char_process_state, &group_pid, &fore_process_pid, &virtual_memory_size);
+
+    printf("pid : %d\n", cur_pid);
 
     char process_state[3];
     sprintf(process_state, "%c", char_process_state);
-    if (find_node(running_background_processes, cur_pid) == NULL){
+    if (group_pid == fore_process_pid){
         strcat(process_state, "+");
     }
 
@@ -56,7 +47,6 @@ void pinfo(char** argument_list, int num_arguments){
         return;
     }
 
-    int virtual_memory_size;
     fscanf(statm_file_stream, "%d", &virtual_memory_size);
 
     printf("memory : %d {Virtual Memory}\n", virtual_memory_size);
