@@ -16,12 +16,10 @@ void deque_dll(DLL que){
     if (que->size == 0) return;
 
     que->size--;
-    DLLNode old_last_node = que->last_node;
-
-    que->last_node = old_last_node->prev_node;
-    free_node(old_last_node);
-
-    que->last_node->next_node = NULL;
+    DLLNode old_first_node = que->start_node->next_node;
+    
+    que->start_node->next_node = old_first_node->next_node;
+    free_node(old_first_node);
 }
 
 void pop_dll(DLL que){
@@ -29,10 +27,12 @@ void pop_dll(DLL que){
     if (que->size == 0) return;
 
     que->size--;
-    DLLNode old_first_node = que->start_node->next_node;
-    
-    que->start_node->next_node = old_first_node->next_node;
-    free_node(old_first_node);
+    DLLNode old_last_node = que->last_node;
+
+    que->last_node = old_last_node->prev_node;
+    free_node(old_last_node);
+
+    que->last_node->next_node = NULL;
 }
 
 void delete_from_dll(DLL que, pid_t pid){
@@ -49,23 +49,12 @@ void delete_from_dll(DLL que, pid_t pid){
         return;
     }
 
-    if (cur_node == que->last_node){
-        deque_dll(que);
-    } else {
-        que->size--;
-
-        DLLNode prev_deleted_node = cur_node->prev_node;
-        DLLNode next_deleted_node = cur_node->next_node;
-
-        free_node(cur_node);
-
-        prev_deleted_node->next_node = next_deleted_node;
-    }
+    delete_node(que, cur_node);
 }
 
 void delete_node(DLL que, DLLNode cur_node){
     if (cur_node == que->last_node){
-        deque_dll(que);
+        pop_dll(que);
     } else {
         que->size--;
 

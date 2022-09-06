@@ -10,8 +10,6 @@ void my_strtok(char** list, int* num, char* args, char* in_data){ // tokenizer f
 }
 
 void my_quit(){ // for quiting terminal
-    printf("\n EXITING TERMINAL \n");
-    add_to_history("exit", default_history_storage_size);
     store_history();
     exit(EXIT_SUCCESS);
 }
@@ -67,4 +65,10 @@ char* parse_to_string(char** args_list, int arg_num){ // convers char** to space
     }
 
     return ret_string;
+}
+
+void ctrl_c_handler(){
+    add_to_history("Force Quit", default_history_storage_size);
+    printf("\n");
+    my_quit();
 }

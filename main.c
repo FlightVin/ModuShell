@@ -60,8 +60,10 @@ int main(){
 
         fflush(stdout);
 
+        // signal
         signal(SIGCHLD, background_process_term);
-        signal(SIGINT, my_quit);
+        signal(SIGINT, ctrl_c_handler);
+
         fflush(stdout);
     }
     

@@ -9,8 +9,8 @@ void run_command(char*); // runs the command in the foreground
 
 void my_cwd(); // Parses current working directory into cur_dir
 
-char* get_month(int); // returns month name
-
 char* parse_to_string(char**, int); // converts array of strings into a single space separated string (redundant now)
+
+void ctrl_c_handler(); // handling ^C
 
 #endif
