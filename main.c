@@ -89,6 +89,7 @@ int main(){
         fflush(stdout);
 
         signal(SIGCHLD, background_process_term);
+        signal(SIGINT, my_quit);
         fflush(stdout);
     }
     

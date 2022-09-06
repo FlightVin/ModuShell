@@ -18,6 +18,8 @@ int detect_amp(char* str){
 }
 
 void my_quit(){
+    printf("\n EXITING TERMINAL \n");
+    add_to_history("exit", default_history_storage_size);
     store_history();
     exit(EXIT_SUCCESS);
 }
