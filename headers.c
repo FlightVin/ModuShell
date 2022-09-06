@@ -6,7 +6,7 @@ size_t max_arg_length = 1e3;
 int pwd_flag = 0;
 
 char root_dir_path[1000] = "\0";
-char user_name[1000] = "\0";
+char* user_name = NULL;
 char old_pwd[1000] = "\0";
 char cur_dir[1000] = "\0";
 

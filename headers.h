@@ -36,7 +36,7 @@ extern size_t max_arg_length;
 extern int pwd_flag;
 
 extern char root_dir_path[1000];
-extern char user_name[1000];
+extern char* user_name;
 extern char old_pwd[1000];
 extern char cur_dir[1000];
 

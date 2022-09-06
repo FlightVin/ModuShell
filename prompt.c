@@ -11,10 +11,10 @@ void prompt(){
     }
 
     // get username
-    int ret = getlogin_r(user_name, strlen(user_name));
-    if (ret < 0){
-        throw_error("Could not acess user name!");
-    }
+    uid_t uid = geteuid();
+    struct passwd *pw_struct = getpwuid(uid);
+    if (pw_struct == NULL) user_name = strdup("CouldNotAccessUserName");
+    else user_name = pw_struct->pw_name;
 
     // get system name
     char* system_name = strdup(uname_struct.sysname);
