@@ -10,6 +10,7 @@ void relative_path(char* current_path, char* display_path){
     size_t first_deviation = 0, min_len = strlen(root_dir_path) < strlen(current_path) ? strlen(root_dir_path) : strlen(current_path);
     while(first_deviation < min_len && root_dir_path[first_deviation] == current_path[first_deviation]) first_deviation++;
 
+    // checking if it was relative to root directory
     if (first_deviation == strlen(root_dir_path)){
         display_path[0] = '~';
         int i = 1;
@@ -75,6 +76,7 @@ void relative_path_to_cwd(char* current_path, char* display_path){
     size_t first_deviation = 0, min_len = strlen(cur_dir) < strlen(current_path) ? strlen(cur_dir) : strlen(current_path);
     while(first_deviation < min_len && cur_dir[first_deviation] == current_path[first_deviation]) first_deviation++;
 
+    // checking if it was relative to current directory
     if (first_deviation == strlen(cur_dir)){
         display_path[0] = '~';
         int i = 1;

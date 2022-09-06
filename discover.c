@@ -11,6 +11,7 @@ void discover(char** argument_list, int argument_num){
     char search_path[max_str_len];
     char dir_path[max_str_len];
 
+    // parse arguments
     for (int i = 0; i<argument_num; i++){
         if (argument_list[i][0] == '-'){
             for (int j = 1; j < strlen(argument_list[i]); j++){
@@ -57,6 +58,7 @@ void discover(char** argument_list, int argument_num){
         f_flag = 1;
     }
 
+    // recursion call
     discover_ls(dir_path, d_flag, f_flag, search_flag, search_path);
 }
 
@@ -75,6 +77,7 @@ void discover_ls(char* dir_path, int d_flag, int f_flag, int search_flag, char* 
         return;
     }
 
+    // only print if d_flag
     if (d_flag && !search_flag){
         printf("%s\n", rel_dir_path);
     }
@@ -89,6 +92,7 @@ void discover_ls(char* dir_path, int d_flag, int f_flag, int search_flag, char* 
 
     struct dirent* dir_struct = readdir(dir_stream);
     while(dir_struct != NULL){
+        // getting child directories and going into them through recursion
         char cur_path[max_str_len];
         sprintf(cur_path, "%s/%s", abs_dir_path, dir_struct->d_name);
 
@@ -98,6 +102,7 @@ void discover_ls(char* dir_path, int d_flag, int f_flag, int search_flag, char* 
 
             stat(cur_path, &stat_struct);
             
+            // checking file type
             if (stat_struct.st_mode & S_IFDIR){
             
                 if (d_flag && search_flag){

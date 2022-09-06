@@ -7,7 +7,7 @@ void pwd(char** path, int num){
         printf("Enter no arguments for pwd!\n");
         return;
     }
-
+    // prints absolute path of cwd
     char cur_dir[1000];
     getcwd(cur_dir, 1000);
     /*

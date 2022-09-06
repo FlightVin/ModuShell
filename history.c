@@ -1,6 +1,7 @@
 #include "headers.h"
 
 void add_to_history(char* command, int storage_size){
+    // store upto storage_size commands in history queue
     if (history_queue->size >= 1){
         if (strcmp(command, history_queue->last_node->element->process_name) == 0) return;
     }
@@ -10,7 +11,7 @@ void add_to_history(char* command, int storage_size){
 }
 
 void history(int display_num){
-
+    // display upto display_num commands
     DLLNode cur_node = history_queue->last_node;
     int output_count = 0;
 
@@ -29,6 +30,7 @@ void history(int display_num){
 }
 
 struct dll* init_history(){
+    // get data from file if it already exists
     sprintf(history_storage_file, "%s/%s", root_dir_path, history_storage_file_name);
 
     FILE* storage_file_stream = fopen(history_storage_file, "r");
@@ -69,6 +71,7 @@ void store_history(){
 
     fprintf(storage_file_stream, "%ld\n", history_queue->size);
 
+    // storing all nodes in file
     while(cur_node != NULL){
         fprintf(storage_file_stream, "%s\n", cur_node->element->process_name);
         cur_node = cur_node->next_node;

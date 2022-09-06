@@ -24,34 +24,23 @@ void pinfo(char** argument_list, int num_arguments){
     int virtual_memory_size, group_pid, fore_process_pid;
     char char_process_state;
 
+    // getting required data from stat_file_name
     fscanf(stat_file_stream, "%d %*s %c %*s %d %*s %*s %d %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %*s %d", &cur_pid, &char_process_state, &group_pid, &fore_process_pid, &virtual_memory_size);
 
     printf("pid : %d\n", cur_pid);
 
     char process_state[3];
     sprintf(process_state, "%c", char_process_state);
-    if (group_pid == fore_process_pid){
+    if (group_pid == fore_process_pid){ // checking if foreground process
         strcat(process_state, "+");
     }
 
     printf("process Status : %s\n", process_state);
 
-    fclose(stat_file_stream);
-
-    // opening statm
-    sprintf(file_path, "/proc/%d/statm", cur_pid);
-    FILE* statm_file_stream = fopen(file_path, "r");
-
-    if (statm_file_stream == NULL){
-        perror("Could not open proc/[PID]/statm file of process");
-        return;
-    }
-
-    fscanf(statm_file_stream, "%d", &virtual_memory_size);
-
+    // virtual memory used in bytes
     printf("memory : %d {Virtual Memory}\n", virtual_memory_size);
 
-    fclose(statm_file_stream);
+    fclose(stat_file_stream);
 
     // opening exe
     sprintf(file_path, "/proc/%d/exe", cur_pid);

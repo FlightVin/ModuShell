@@ -18,6 +18,7 @@ void ls(char** passed_args, int num_args){
     int a_flag = 0;
     int no_dir_flag = 1;
 
+    // parsing arguments
     for (int i = 0; i<num_args; i++){
         if (passed_args[i][0] == '-'){
             for (int j = 1; j < strlen(passed_args[i]); j++){
@@ -79,8 +80,6 @@ int comparator(const void* a, const void* b){
     return strcasecmp(l, r);
 }
 
-// Test this - ls -al /mnt ~/dir1 ./dir1 ../C-shell/dir2 dir2 kjlsd
-
 void do_ls(char* ls_dir_path, int l_flag, int a_flag){
 
     struct stat stat_struct;
@@ -137,19 +136,10 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
 
                 // last modification time
                 struct tm* ret_time = localtime(&stat_struct.st_mtime);
-                int last_hour = ret_time->tm_hour;
-                int last_min = ret_time->tm_min;
 
-                char last_hour_str[3], last_min_str[3];
-                if (last_hour < 10){
-                    sprintf(last_hour_str, "%c%d", '0', last_hour);
-                } else sprintf(last_hour_str, "%d", last_hour);
-                if (last_min < 10){
-                    sprintf(last_min_str, "%c%d", '0', last_min);
-                } else sprintf(last_min_str, "%d", last_min);
-                
-
-                printf(" %s %2d %s:%s ", get_month(ret_time->tm_mon), ret_time->tm_mday, last_hour_str, last_min_str);
+                char date_string[20];
+                strftime(date_string, 20, "%h %d %H:%M", ret_time);
+                printf(" %s ", date_string);
 
                 if (stat_struct.st_mode & S_IXUSR) printf("\033[32m");
                 printf("%s\n", display_name);
@@ -159,6 +149,7 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
         }
     }
 
+    // printing relative path
     char relative_name[max_str_len];
     relative_path(ls_dir_path, relative_name);
     printf("%s:\n", relative_name);
@@ -175,6 +166,7 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
     struct dirent* dir_list[max_arg_length];
     size_t dir_num = 0;
 
+    // storing things inside directory in an array
     struct dirent* dir_struct = readdir(dir_stream);
     while(dir_struct != NULL){
         if (dir_struct->d_name[0] == '.'){
@@ -275,23 +267,7 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
                 
                 // redundant code -> dates aren't parsed properly
                 /*
-                int last_hour = ret_time->tm_hour;
-                int last_min = ret_time->tm_min;
-
-                char last_hour_str[3], last_min_str[3];
-                if (last_hour < 10){
-                    sprintf(last_hour_str, "%c%d", '0', last_hour);
-                } else sprintf(last_hour_str, "%d", last_hour);
-                if (last_min < 10){
-                    sprintf(last_min_str, "%c%d", '0', last_min);
-                } else sprintf(last_min_str, "%d", last_min);
-                
-                // getting current year
-                time_t dummy_time = time(NULL);
-                struct tm* cur_time = localtime(&dummy_time);
-
-                if (cur_time->tm_year == ret_time->tm_year) printf(" %s %2d %s:%s ", get_month(ret_time->tm_mon), ret_time->tm_mday, last_hour_str, last_min_str);
-                else printf(" %s %2d  %d ", get_month(ret_time->tm_mon), ret_time->tm_mday, ret_time->tm_year);
+                    WSL doesn't execute ctime properly to get dates
                 */
 
                 char date_string[20];
@@ -318,8 +294,9 @@ void do_ls(char* ls_dir_path, int l_flag, int a_flag){
 }
 
 void color_print(struct dirent* cur_ptr, char* path){
+    // checks whether file/folder/executable and prints
     if (cur_ptr->d_type == DT_DIR){
-        printf("\033[34m");
+        printf("\033[34m"); // directories
     } else if (cur_ptr->d_type == DT_REG){
         struct stat stat_struct;
         stat(path, &stat_struct);

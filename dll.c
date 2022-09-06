@@ -1,6 +1,7 @@
 #include "headers.h"
 
 void insert_dll(DLL que, pid_t pid, char* process_name){
+    // insert at back
     que->size++;
     DLLNode new_node = make_node(pid, process_name);
 
@@ -11,6 +12,7 @@ void insert_dll(DLL que, pid_t pid, char* process_name){
 }
 
 void deque_dll(DLL que){
+    // remove from front
     if (que->size == 0) return;
 
     que->size--;
@@ -23,6 +25,7 @@ void deque_dll(DLL que){
 }
 
 void pop_dll(DLL que){
+    // remove from back
     if (que->size == 0) return;
 
     que->size--;
@@ -33,6 +36,7 @@ void pop_dll(DLL que){
 }
 
 void delete_from_dll(DLL que, pid_t pid){
+    // delete specific node
     if (que->size == 0) return;
 
     DLLNode cur_node = que->start_node->next_node;

@@ -32,39 +32,11 @@ int main(){
 
         if (strlen(input_message) != 0) add_to_history(input_message, default_history_storage_size);
 
-        // legacy code which supports things but gives ; more priority than &
-        /*
-        int num_commands;
-        my_strtok(command_list, &num_commands, ";\n", input_message);
-
-        for (int cmd_index = 0; cmd_index < num_commands; cmd_index++){
-            strcpy(cur_command, command_list[cmd_index]);
-            
-            if (detect_amp(command_list[cmd_index])){
-                int flag = (cur_command[strlen(cur_command) - 1] == '&') ? 1 : 0;
-                int num_background;
-                
-                my_strtok(background_list, &num_background, "&", cur_command);
-
-                for (int i = 0; i<num_background-1; i++){
-                    run_cmd_background(background_list[i]);
-                }
-
-                if (flag){
-                    run_cmd_background(background_list[num_background - 1]);
-                }else{
-                    run_command(background_list[num_background - 1]);
-                }
-            }else{
-                run_command(cur_command);
-            }
-        }
-        */
-
         char command_buffer[max_str_len];
         int command_length = 0;
         strcpy(command_buffer, "");
 
+        // getting individual commands and cheking whether background of foreground
         for (int i = 0; i<=no_space; i++){
             if (input_message[i] != ';' && input_message[i] != '&'){
                 command_buffer[command_length++] = input_message[i];

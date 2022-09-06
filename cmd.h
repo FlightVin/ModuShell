@@ -3,8 +3,6 @@
 
 void my_strtok(char**, int*, char*, char*); //tokenizes the char** list
 
-int detect_amp(char*); // Detects & symbol
-
 void my_quit(); // exits terminal and saves relevant states
 
 void run_command(char*); // runs the command in the foreground

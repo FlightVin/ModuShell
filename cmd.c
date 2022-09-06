@@ -1,6 +1,6 @@
 #include "headers.h"
 
-void my_strtok(char** list, int* num, char* args, char* in_data){
+void my_strtok(char** list, int* num, char* args, char* in_data){ // tokenizer function
     list[0] = strtok(in_data, args);
     *num = 0;
 
@@ -9,22 +9,14 @@ void my_strtok(char** list, int* num, char* args, char* in_data){
     }
 }
 
-// redundant 
-int detect_amp(char* str){
-    for (int i = 0; i<strlen(str); i++){
-        if (str[i] == '&') return 1;
-    }
-    return 0;
-}
-
-void my_quit(){
+void my_quit(){ // for quiting terminal
     printf("\n EXITING TERMINAL \n");
     add_to_history("exit", default_history_storage_size);
     store_history();
     exit(EXIT_SUCCESS);
 }
 
-void run_command(char* cur_command){
+void run_command(char* cur_command){ // running a command in foreground
     char* argument_list[max_arg_length];
     char* old_argument = strdup(cur_command);
     int num_arguments;
@@ -60,27 +52,11 @@ void run_command(char* cur_command){
     }
 }
 
-void my_cwd(){
+void my_cwd(){ // puts cwd path into cur_dir
     getcwd(cur_dir, max_str_len);
 }
 
-// redunant
-char* get_month(int m_num){
-    if (m_num == 1) return "Jan";
-    if (m_num == 2) return "Feb";
-    if (m_num == 3) return "Mar";
-    if (m_num == 4) return "Apr";
-    if (m_num == 5) return "May";
-    if (m_num == 6) return "Jun";
-    if (m_num == 7) return "Jul";
-    if (m_num == 8) return "Aug";
-    if (m_num == 9) return "Sep";
-    if (m_num == 10) return "Oct";
-    if (m_num == 11) return "Nov";
-    if (m_num == 11) return "Dec";
-}
-
-char* parse_to_string(char** args_list, int arg_num){
+char* parse_to_string(char** args_list, int arg_num){ // convers char** to space separated char*
     char* ret_string = (char*) malloc(sizeof(char) * max_str_len);
 
     strcpy(ret_string, args_list[0]);
