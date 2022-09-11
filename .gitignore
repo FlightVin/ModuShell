@@ -7,3 +7,5 @@
 /dir2
 /.history_storage_file
 /.shell_stderr
+/*.in
+/*.out

@@ -1,4 +1,5 @@
 #include "headers.h"
+#include "path.h"
 
 void my_strtok(char** list, int* num, char* args, char* in_data){ // tokenizer function
     list[0] = strtok(in_data, args);
@@ -27,26 +28,114 @@ void run_command(char* cur_command){ // running a command in foreground
     
     char* main_command = strdup(argument_list[0]);
 
+    int non_io_arguments_number = 0;
+
+    // parsing i/o redirection
+    for (int i = 0; i<num_arguments; i++){
+        if (argument_list[i][0] == '>' || argument_list[i][0] == '<') break;
+        non_io_arguments_number = i+1;
+    }
+
+    // i/o handling
+    int write_flag = 0, read_flag = 0, append_flag = 0;
+    char* write_file, *read_file, *append_file;
+    char write_path[max_str_len], read_path[max_str_len], append_path[max_str_len];
+    int write_file_desc, read_file_desc, append_file_desc;
+
+    for (int i = non_io_arguments_number; i<num_arguments - 1; i+=2){
+        if (argument_list[i][0] == '>'){
+            if (strcmp(argument_list[i], ">") == 0){
+                write_flag = 1;
+                write_file = strdup(argument_list[i+1]);
+
+            } else if (strcmp(argument_list[i], ">>") == 0){
+                append_flag = 1;
+                append_file = strdup(argument_list[i+1]);
+
+            } else {
+                printf("Unexpected operand %s\n", argument_list[i]);
+                return;
+            }
+        } else if (strcmp(argument_list[i], "<") == 0) {
+            read_flag = 1;
+            read_file = strdup(argument_list[i+1]);
+
+        }  else {
+            printf("Unexpected operand %s\n", argument_list[i]);
+            return;
+        }
+    }
+
+    int stdin_file_descriptor = dup(STDIN_FILENO), stdout_file_descriptor = dup(STDOUT_FILENO);
+
+    if (read_flag){
+        absolute_path(read_file, read_path);
+        read_file_desc = open(read_path, O_RDONLY);
+        if (read_file_desc < 0){
+            perror("Could not read file");
+            return;
+        }
+
+        dup2(read_file_desc, STDIN_FILENO);
+        close(read_file_desc);
+    }
+
+    if (write_flag){
+        absolute_path(write_file, write_path);
+        write_file_desc = open(write_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        if (read_file_desc < 0){
+            perror("Could not write file");
+            return;
+        }
+
+        dup2(write_file_desc, STDOUT_FILENO);
+        close(write_file_desc);
+    }
+
+    if (append_flag){
+        absolute_path(append_file, append_path);
+        append_file_desc = open(write_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
+        if (append_file_desc < 0){
+            perror("Could not append file");
+            return;
+        }
+
+        dup2(append_file_desc, STDOUT_FILENO);
+        close(append_file_desc);
+    }
+
     if (strcmp(main_command, "echo") == 0){
-        echo(&argument_list[1], num_arguments - 1);
+        echo(&argument_list[1], non_io_arguments_number - 1);
     } else if (strcmp(main_command, "cd") == 0){
-        cd(&argument_list[1], num_arguments - 1);
+        cd(&argument_list[1], non_io_arguments_number - 1);
     } else if (strcmp(main_command, "pwd") == 0){
-        pwd(&argument_list[1], num_arguments - 1);
+        pwd(&argument_list[1], non_io_arguments_number - 1);
     } else if (strcmp(main_command, "quit") == 0 || strcmp(main_command, "exit") == 0){
         my_quit();
     } else if (strcmp(main_command, "ls") == 0){
-        ls(&argument_list[1], num_arguments - 1);
+        ls(&argument_list[1], non_io_arguments_number - 1);
     } else if (strcmp(main_command, "pinfo") == 0){
-        pinfo(&argument_list[1], num_arguments - 1);
+        pinfo(&argument_list[1], non_io_arguments_number - 1);
     } else if (strcmp(main_command, "history") == 0){
         history(default_history_display_num);
     } else if (strcmp(main_command, "discover") == 0){
-        discover(&argument_list[1], num_arguments - 1);
+        discover(&argument_list[1], non_io_arguments_number - 1);
     }
 
     else {
-        run_in_foreground(argument_list);
+        char* non_io_args_list[max_arg_length];
+        for (int i = 0; i<non_io_arguments_number; i++) non_io_args_list[i] = strdup(argument_list[i]);
+        run_in_foreground(non_io_args_list);
+    }
+
+    if (read_flag){
+        dup2(stdin_file_descriptor, STDIN_FILENO);
+        close(stdin_file_descriptor);
+    }
+
+    if (write_flag || append_flag){
+        dup2(stdout_file_descriptor, STDOUT_FILENO);
+        close(stdout_file_descriptor);
     }
 }
 
