@@ -87,7 +87,7 @@ int check_for_io_redir_string(char* cmd){
 }
 
 void run_command(char* cur_command){ // running a command in foreground
-    // puts(cur_command);
+
     char* argument_list[max_arg_length];
     char* old_argument = strdup(cur_command);
     int num_arguments;
@@ -238,8 +238,26 @@ char* parse_to_string(char** args_list, int arg_num){ // convers char** to space
     return ret_string;
 }
 
-void ctrl_c_handler(){
-    add_to_history("Force Quit", default_history_storage_size);
+void ctrl_d_handler(){
+    puts("Logging out of shell");
+    add_to_history("Shell Log Out", default_history_storage_size);
     printf("\n");
     my_quit();
+}
+
+void ctrl_c_handler(){
+    if (is_foreground_running){
+        is_foreground_running = 0;
+        process_exec_time = 0;
+        printf("\n");
+        fflush(stdout);
+    } else {
+        printf("\n");
+        prompt();
+        fflush(stdout);
+    }
+}
+
+void ctrl_z_handler(){
+    
 }

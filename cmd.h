@@ -13,6 +13,8 @@ void my_cwd(); // Parses current working directory into cur_dir
 
 char* parse_to_string(char**, int); // converts array of strings into a single space separated string (redundant now)
 
+void ctrl_d_handler(); // handling ^D
+
 void ctrl_c_handler(); // handling ^C
 
 #endif

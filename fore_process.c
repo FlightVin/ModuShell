@@ -17,8 +17,12 @@ void run_in_foreground(char** argument_list){
         }
         exit(EXIT_SUCCESS);
     } else {
+        is_foreground_running = 1;
+
         int process_status;
         waitpid(fore_pid, &process_status, WUNTRACED);
+
+        is_foreground_running = 0;
     }
 
     // Ending process

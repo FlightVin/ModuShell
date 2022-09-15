@@ -15,12 +15,21 @@ int main(){
     // freopen(".shell_stderr", "w", stderr);
     // fprintf(stderr, "\n\n ---------- start of shell execution at system time ---------- %ld\n\n", time(NULL));
 
+    // signal
+    signal(SIGCHLD, background_process_term);
+    signal(SIGINT, ctrl_c_handler);
+
     while(1){
         prompt();
         fflush(stdout);
 
         size_t input_len = max_str_len;
-        getline(&input_message, &input_len, stdin);
+        int getline_ret = getline(&input_message, &input_len, stdin);
+
+        // handling ^D
+        if (getline_ret == EOF){
+            ctrl_d_handler();
+        }
 
         size_t no_space = strlen(input_message) - 1;
         for (no_space = strlen(input_message) - 1; no_space>0; no_space--){
@@ -57,12 +66,6 @@ int main(){
         if (strlen(command_buffer) != 0){
             execute_command(command_buffer);
         }
-
-        fflush(stdout);
-
-        // signal
-        signal(SIGCHLD, background_process_term);
-        signal(SIGINT, ctrl_c_handler);
 
         fflush(stdout);
     }

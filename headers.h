@@ -43,6 +43,7 @@ extern char cur_dir[1000];
 
 // For foregorund processes
 extern long process_exec_time;
+extern int is_foreground_running;
 
 // For background process handling
 struct dll* running_background_processes;
