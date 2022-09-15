@@ -28,6 +28,10 @@
 #include "dll.h"
 #include "history.h"
 #include "discover.h"
+#include "jobs.h"
+#include "bg.h"
+#include "fg.h"
+#include "sig.h"
 
 // using extern for convention
 // Generic variables
@@ -35,6 +39,7 @@ extern size_t max_str_len;
 extern size_t command_len;
 extern size_t max_arg_length;
 extern int pwd_flag;
+extern int shell_pid;
 
 extern char root_dir_path[1000];
 extern char* user_name;
@@ -44,6 +49,8 @@ extern char cur_dir[1000];
 // For foregorund processes
 extern long process_exec_time;
 extern int is_foreground_running;
+extern int cur_foreground_process_pid;
+extern char cur_foreground_process_name[1000];
 
 // For background process handling
 struct dll* running_background_processes;

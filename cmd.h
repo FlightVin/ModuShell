@@ -17,4 +17,6 @@ void ctrl_d_handler(); // handling ^D
 
 void ctrl_c_handler(); // handling ^C
 
+void ctrl_z_handler(); // handling ^Z
+
 #endif

@@ -5,6 +5,7 @@ int main(){
     getcwd(root_dir_path, max_str_len); 
     running_background_processes = make_dll();
     history_queue = init_history();
+    shell_pid = getpid();
 
     char* input_message;
     char cur_command[max_str_len];
@@ -18,6 +19,7 @@ int main(){
     // signal
     signal(SIGCHLD, background_process_term);
     signal(SIGINT, ctrl_c_handler);
+    signal(SIGTSTP, ctrl_z_handler);
 
     while(1){
         prompt();

@@ -202,6 +202,14 @@ void run_command(char* cur_command){ // running a command in foreground
         history(default_history_display_num);
     } else if (strcmp(main_command, "discover") == 0){
         discover(&argument_list[1], non_io_arguments_number - 1);
+    } else if (strcmp(main_command, "jobs") == 0){
+        jobs(&argument_list[1], non_io_arguments_number - 1);
+    } else if (strcmp(main_command, "sig") == 0){
+        sig(&argument_list[1], non_io_arguments_number - 1);
+    } else if (strcmp(main_command, "bg") == 0){
+        bg(&argument_list[1], non_io_arguments_number - 1);
+    } else if (strcmp(main_command, "fg") == 0){
+        fg(&argument_list[1], non_io_arguments_number - 1);
     }
 
     else {
@@ -239,6 +247,12 @@ char* parse_to_string(char** args_list, int arg_num){ // convers char** to space
 }
 
 void ctrl_d_handler(){
+    // not letting anything other than terminal handle this
+    if (getpid() != shell_pid){
+        printf("Only call in shell!\n");
+        return;
+    }
+
     puts("Logging out of shell");
     add_to_history("Shell Log Out", default_history_storage_size);
     printf("\n");
@@ -246,9 +260,16 @@ void ctrl_d_handler(){
 }
 
 void ctrl_c_handler(){
+    // not letting anything other than terminal handle this
+    if (getpid() != shell_pid){
+        printf("Only call in shell!\n");
+        return;
+    }
+
     if (is_foreground_running){
+        kill(cur_foreground_process_pid, SIGINT); // interrupting foreground process
+
         is_foreground_running = 0;
-        process_exec_time = 0;
         printf("\n");
         fflush(stdout);
     } else {
@@ -259,5 +280,27 @@ void ctrl_c_handler(){
 }
 
 void ctrl_z_handler(){
-    
+    // not letting anything other than terminal handle this
+    if (getpid() != shell_pid){
+        printf("Only call in shell!\n");
+        return;
+    }
+
+    if (is_foreground_running){
+        // converting to background process
+        insert_dll(running_background_processes, cur_foreground_process_pid, cur_foreground_process_name);
+        printf("[%ld] %d\n", running_background_processes->size, cur_foreground_process_pid);
+        setpgid(cur_foreground_process_pid, cur_foreground_process_pid);
+
+        kill(cur_foreground_process_pid, SIGTSTP); // changing status to stopped
+        // puts(cur_foreground_process_name);
+
+        is_foreground_running = 0;
+        printf("\n");
+        fflush(stdout);
+    } else {
+        printf("\n");
+        prompt();
+        fflush(stdout);
+    }
 }
