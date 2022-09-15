@@ -5,6 +5,8 @@ Making a shell in C programming language
 
 > To see timeline of progress : https://github.com/FlightVin/C-Shell (NOTE - private directory, so, please email vineeth.bhat@students.iiit.ac.in for accessing rights)
 
+MIDSUBMISSION - I/O redirection done
+
 ---
 
 ### _Legend_ :
@@ -25,6 +27,15 @@ Making a shell in C programming language
     * `$ command1 arguments & command2 arguments`
     * `$ command1 arguments; command2     arguments   ; command3  arguments ...`
     * A command ending with a `;` will be executed in the foreground while a command ending in `&` will executed in background. If no such character is present at the end, then the command is run in foreground.
+    * I/O redirection works as follows - 
+        1. `cmd` > file : redirects stdout into the file (writes file)
+        2. `cmd` < file : reads from file, i.e, takes stdin from file
+        3. `cmd` >> file : Appends data to file
+        
+        (Works on assumption that user will give spaces around <, >, and >>)
+    * Piping works as follows - 
+    
+        `cmd1` | `cmd2` : redirects output of cmd1 into input of cmd2
 4. To remove all .o files, main file and history file (hidden) run `$ make clean`
 
 ---
