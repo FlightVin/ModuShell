@@ -15,7 +15,79 @@ void my_quit(){ // for quiting terminal
     exit(EXIT_SUCCESS);
 }
 
+void execute_command(char* command){
+    char* pipe_list[max_arg_length];
+    int num_pipes = 0;
+    my_strtok(pipe_list, &num_pipes, "|", command);
+
+    if (num_pipes == 0) return;
+    if (num_pipes <= 1){
+        run_command(pipe_list[0]);
+        return;
+    }
+
+    int stdin_file_descriptor = dup(STDIN_FILENO), stdout_file_descriptor = dup(STDOUT_FILENO);
+
+    for (int pipe_index = 0; pipe_index < num_pipes; pipe_index++){
+
+        int pipe_arr[2];
+        int pipe_return = pipe(pipe_arr);
+
+        if (pipe_return < 0){
+            perror("Could not make pipe");
+            return;
+        }
+
+        pid_t pid = fork();
+
+        if (pid < 0){
+            perror("Could not create child");
+            return;
+        } else if (pid == 0){
+            close(pipe_arr[0]);
+
+            dup2(pipe_arr[1], STDOUT_FILENO);
+
+            if (pipe_index == num_pipes - 1){
+                dup2(stdout_file_descriptor, STDOUT_FILENO);
+                close(stdout_file_descriptor);
+            }
+
+            run_command(pipe_list[pipe_index]);
+
+            close(pipe_arr[1]);
+
+            dup2(stdin_file_descriptor, STDIN_FILENO);
+
+            // fprintf(stderr, "done child\n");
+
+            exit(EXIT_SUCCESS);
+        } 
+            int process_status;
+            waitpid(pid, &process_status, WUNTRACED);
+            // fprintf(stderr, "Entered parent\n");
+
+            close(pipe_arr[1]);
+
+            if (pipe_index != num_pipes - 1) dup2(pipe_arr[0], STDIN_FILENO);
+            else {
+                dup2(stdin_file_descriptor, STDIN_FILENO);
+                close(stdin_file_descriptor);
+            }
+
+            close(pipe_arr[0]);
+    }
+}
+
+int check_for_io_redir_string(char* cmd){
+    if (strcmp(cmd, ">") == 0) return 1;
+    if (strcmp(cmd, "<") == 0) return 1;
+    if (strcmp(cmd, ">>") == 0) return 1;
+    return 0;
+}
+
 void run_command(char* cur_command){ // running a command in foreground
+    // puts(cur_command);
     char* argument_list[max_arg_length];
     char* old_argument = strdup(cur_command);
     int num_arguments;
@@ -42,7 +114,17 @@ void run_command(char* cur_command){ // running a command in foreground
     char write_path[max_str_len], read_path[max_str_len], append_path[max_str_len];
     int write_file_desc, read_file_desc, append_file_desc;
 
+    if ((num_arguments - non_io_arguments_number)%2 == 1){
+        printf("Invalid redirection!\n");
+        return;
+    }
+
     for (int i = non_io_arguments_number; i<num_arguments - 1; i+=2){
+        if (check_for_io_redir_string(argument_list[i+1])){
+            printf("Invalid command: missing file name\n");   
+            return;
+        }
+
         if (argument_list[i][0] == '>'){
             if (strcmp(argument_list[i], ">") == 0){
                 write_flag = 1;

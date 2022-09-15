@@ -5,6 +5,8 @@ void my_strtok(char**, int*, char*, char*); //tokenizes the char** list
 
 void my_quit(); // exits terminal and saves relevant states
 
+void execute_command(char*); // to parse pipes
+
 void run_command(char*); // runs the command in the foreground
 
 void my_cwd(); // Parses current working directory into cur_dir

@@ -44,7 +44,7 @@ int main(){
                 command_buffer[command_length++] = '\0';
 
                 if (input_message[i] == ';'){
-                    run_command(command_buffer);
+                    execute_command(command_buffer);
                 } else {
                     run_back_background(command_buffer);
                 }
@@ -55,7 +55,7 @@ int main(){
         }
 
         if (strlen(command_buffer) != 0){
-            run_command(command_buffer);
+            execute_command(command_buffer);
         }
 
         fflush(stdout);
