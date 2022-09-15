@@ -33,7 +33,7 @@ void run_in_background(char** argument_list, int argument_num){
         exit(EXIT_SUCCESS);
     } else {
         // insert process into dll
-        insert_dll(running_background_processes, back_pid, argument_list[0]);
+        insert_dll(running_background_processes, back_pid, parse_to_string(argument_list, argument_num));
         printf("[%ld] %d\n", running_background_processes->size, back_pid);
     }
     fflush(stdout);
