@@ -1,4 +1,4 @@
-objects = main.o headers.o cmd.o prompt.o error_mes.o path.o echo.o cd.o pwd.o back_process.o ls.o fore_process.o pinfo.o dll.o history.o discover.o jobs.o sig.o fg.o bg.o
+objects = main.o headers.o cmd.o prompt.o error_mes.o path.o echo.o cd.o pwd.o back_process.o ls.o fore_process.o pinfo.o dll.o history.o discover.o jobs.o sig.o fg.o bg.o autocompletion.o
 
 main: $(objects)
 	gcc -o main $(objects)
@@ -42,6 +42,8 @@ sig.o : sig.c sig.h headers.h
 bg.o : bg.c bg.h headers.h
 
 fg.o : fg.c fg.h headers.h
+
+autocompletion.o : autocompletion.c autocompletion.h headers.h
 
 clean:
 	rm main $(objects) .history_storage_file

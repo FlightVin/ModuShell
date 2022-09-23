@@ -12,6 +12,8 @@
 #include <time.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <termios.h>
+#include <ctype.h>
 
 
 #include "cmd.h"
@@ -32,6 +34,7 @@
 #include "bg.h"
 #include "fg.h"
 #include "sig.h"
+#include "autocompletion.h"
 
 // using extern for convention
 // Generic variables
@@ -45,6 +48,7 @@ extern char root_dir_path[1000];
 extern char* user_name;
 extern char old_pwd[1000];
 extern char cur_dir[1000];
+extern char input_message[1000];
 
 // For foregorund processes
 extern long process_exec_time;

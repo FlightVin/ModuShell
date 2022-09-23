@@ -7,7 +7,7 @@ int main(){
     history_queue = init_history();
     shell_pid = getpid();
 
-    char* input_message;
+    // char* input_message;
     char cur_command[max_str_len];
     char* command_list[max_arg_length];
     char* background_list[max_arg_length];
@@ -26,12 +26,13 @@ int main(){
         fflush(stdout);
 
         size_t input_len = max_str_len;
-        int getline_ret = getline(&input_message, &input_len, stdin);
+        // int getline_ret = getline(&input_message, &input_len, stdin);
+        get_input();
 
         // handling ^D
-        if (getline_ret == EOF){
-            ctrl_d_handler();
-        }
+        // if (getline_ret == EOF){
+        //     ctrl_d_handler();
+        // }
 
         size_t no_space = strlen(input_message) - 1;
         for (no_space = strlen(input_message) - 1; no_space>0; no_space--){

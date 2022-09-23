@@ -10,6 +10,7 @@ char root_dir_path[1000] = "\0";
 char* user_name = NULL;
 char old_pwd[1000] = "\0";
 char cur_dir[1000] = "\0";
+char input_message[1000] = "\0";
 
 long process_exec_time = 0;
 int is_foreground_running = 0;
