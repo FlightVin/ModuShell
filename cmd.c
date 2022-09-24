@@ -291,7 +291,7 @@ void ctrl_z_handler(){
         insert_dll(running_background_processes, cur_foreground_process_pid, cur_foreground_process_name);
         printf("[%ld] %d\n", running_background_processes->size, cur_foreground_process_pid);
         setpgid(cur_foreground_process_pid, cur_foreground_process_pid);
-                                                                                                                                                                                                                                                                                                                        
+                                     
         kill(cur_foreground_process_pid, SIGTSTP); // changing status to stopped
         // puts(cur_foreground_process_name);
 
