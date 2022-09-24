@@ -5,8 +5,6 @@ Making a shell in C programming language
 
 > To see timeline of progress : https://github.com/FlightVin/C-Shell (NOTE - private directory, so, please email vineeth.bhat@students.iiit.ac.in for accessing rights)
 
-MIDSUBMISSION - I/O redirection, piping, ctrl-D, ctrl-C done
-
 ---
 
 ### _Legend_ :
@@ -41,6 +39,11 @@ MIDSUBMISSION - I/O redirection, piping, ctrl-D, ctrl-C done
         1. `^C` : Terminates running foreground process, if any.
         2. `^D` : Logs out of shell
         3. `^Z` : Pushes running foreground process to background.
+    * Autocompletion - 
+        
+        Whenever `tab` key is pressed it either - 
+        1. Displays all the possible files folders starting with the given starting characters (all files and folders if preceeded by a space or nothing) under the prompt.
+        2. If there is only one possible file or folder, it is autocompleted in the terminal. 
 4. To remove all .o files, main file and history file (hidden) run `$ make clean`
 
 ---
@@ -160,7 +163,36 @@ MIDSUBMISSION - I/O redirection, piping, ctrl-D, ctrl-C done
 
         `$ discover -<flags> <dir_name>` : changes to home directory
 
-9. Any other process is run as in linux terminal using `execvp`
+9. **`jobs`**
+    * _Output_ : Displays all processes running in background along with pid and status (running or stopped)
+
+        * Flags - 
+            * -s print only stopped processes
+            * -r print only running processed
+    * _Syntax_ :
+
+        `$ jobs -<flags>`
+
+10. **`sig`**
+    * _Output_ : Send the signal corresponding to the given signal number to the given job bumber (based on sequential order printed in jobs). Throws an error if either job number or signal number are invalid.
+    * _Syntax_ :
+
+        `$ sig <job_number> <signal_number>`
+
+11. **`fg`**
+    * _Output_ : Brings the running or stopped background job corresponding to job number to the foreground, and changes
+    its state to running.
+    * _Syntax_ :
+
+        `$ fg <job_number>`
+
+12. **`bg`**
+    * _Output_ : Changes the state of a stopped background job to running (in the background).
+    * _Syntax_ :
+
+        `$ bg <job_number>`
+
+13. Any other process is run as in linux terminal using `execvp`
 
 ---
 
@@ -216,3 +248,15 @@ A filename refers to both the .c as well as the .h files
 
 16. **pwd**
     * Functionality to display absolute path of present working directory
+
+17. **autocompletion**
+    * Functionality to implement autocompletion
+
+18. **bg**
+    * Functionality to implement bg command
+
+19. **fg**
+    * Functionality to implement fg command
+
+20. **sig**
+    * FUnctionality to implement sig command

@@ -81,8 +81,17 @@ void get_input(){
                     } else if (dir_num == 1){
                         // printf("\n");
                         strcat(input_message, dir_list[0]->d_name);
-                        pt = strlen(input_message);
+
+                        pt = strlen(input_message) + 1;
                         printf("%s", dir_list[0]->d_name);
+
+                        if (dir_list[0]->d_type == DT_DIR){
+                            strcat(input_message, "/");
+                            printf("/");
+                        } else {
+                            strcat(input_message, " ");
+                            printf(" ");
+                        }
                     } else {
                         printf("\n");
                         for (int i = 0; i<dir_num; i++){
@@ -133,8 +142,16 @@ void get_input(){
                     } else if (dir_num == 1){                    
 
                         strcat(input_message, &(dir_list[0]->d_name)[strlen(temp_path)]);
-                        pt = strlen(input_message);
+                        pt = strlen(input_message) + 1;
                         printf("%s", &(dir_list[0]->d_name)[strlen(temp_path)]);
+
+                        if (dir_list[0]->d_type == DT_DIR){
+                            strcat(input_message, "/");
+                            printf("/");
+                        } else {
+                            strcat(input_message, " ");
+                            printf(" ");
+                        }
                     } else {
                         printf("\n");
                         for (int i = 0; i<dir_num; i++){

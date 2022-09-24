@@ -185,6 +185,9 @@ void run_command(char* cur_command){ // running a command in foreground
         dup2(append_file_desc, STDOUT_FILENO);
         close(append_file_desc);
     }
+    
+    is_foreground_running = 1;
+    strcpy(cur_foreground_process_name, parse_to_string(argument_list, non_io_arguments_number));
 
     if (strcmp(main_command, "echo") == 0){
         echo(&argument_list[1], non_io_arguments_number - 1);

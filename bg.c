@@ -23,6 +23,7 @@ void bg(char** arg_list, int arg_num){
 
     pid_t job_pid = cur_node->element->process_pid;
 
+    // continuing process in foreground
     if (kill(job_pid, SIGCONT) < 0){
         perror("Could not send signal");
     }
