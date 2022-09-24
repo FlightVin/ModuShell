@@ -97,8 +97,31 @@ void get_input(){
                         for (int i = 0; i<dir_num; i++){
                             printf("%s\n", dir_list[i]->d_name);
                         }
-                        prompt();
-                        printf("%s", input_message);
+
+                        int max_len = strlen(dir_list[0]->d_name);
+                        for (int i = 1; i<dir_num; i++){
+                            int min_len = strlen(dir_list[i]->d_name);
+                            if (strlen(dir_list[i-1]->d_name) < min_len) min_len = strlen(dir_list[i-1]->d_name);
+                        
+                            int cur_len = 0;
+                            for (int j = 0; j<min_len; j++){
+                                if (dir_list[i]->d_name[j] != dir_list[i-1]->d_name[j]) break;
+                                cur_len = j+1;
+                            }
+
+                            if (cur_len < max_len) max_len = cur_len;
+                        }
+
+                        if (max_len == 0){
+                            prompt();
+                            printf("%s", input_message);
+                        } else {
+                            prompt();
+                            strncat(input_message, dir_list[0]->d_name, max_len);
+                            printf("%s", input_message);
+
+                            pt = strlen(input_message);
+                        }
                     }
 
                 } else {
@@ -157,8 +180,31 @@ void get_input(){
                         for (int i = 0; i<dir_num; i++){
                             printf("%s\n", dir_list[i]->d_name);
                         }
-                        prompt();
-                        printf("%s", input_message);
+
+                        int max_len = strlen(dir_list[0]->d_name);
+                        for (int i = 1; i<dir_num; i++){
+                            int min_len = strlen(dir_list[i]->d_name);
+                            if (strlen(dir_list[i-1]->d_name) < min_len) min_len = strlen(dir_list[i-1]->d_name);
+                        
+                            int cur_len = 0;
+                            for (int j = 0; j<min_len; j++){
+                                if (dir_list[i]->d_name[j] != dir_list[i-1]->d_name[j]) break;
+                                cur_len = j+1;
+                            }
+
+                            if (cur_len < max_len) max_len = cur_len;
+                        }
+
+                        if (max_len == 0){
+                            prompt();
+                            printf("%s", input_message);
+                        } else {
+                            prompt();
+                            strncat(input_message, &(dir_list[0]->d_name)[strlen(temp_path)], max_len - strlen(temp_path));
+                            printf("%s", input_message);
+
+                            pt = strlen(input_message);
+                        }
                     }
                 }
             } else {
