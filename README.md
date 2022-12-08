@@ -3,8 +3,6 @@ Making a shell in C programming language
 
 > Made by Vineeth Bhat (2021101103)
 
-> To see timeline of progress : https://github.com/FlightVin/C-Shell (NOTE - private directory, so, please email vineeth.bhat@students.iiit.ac.in for accessing rights)
-
 ---
 
 ### _Legend_ :
