@@ -5,16 +5,6 @@ Making a shell in C programming language
 
 ---
 
-### _Legend_ :
-
-1. How to run shell
-
-2. Commands accepted in shell
-
-3. About files 
-
----
-
 ## Running shell
 
 1. Run the makefile via `$ make`
