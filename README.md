@@ -58,7 +58,7 @@ Making a shell in C programming language
 
         `$ echo hello     there!`
 
-        `>>> hello     there!`
+        `>>> hello there!`
     
 2. **`cd`**
     * _Output_ : Changes current directory to given directory
